@@ -7,6 +7,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="/s3Java.js"></script>
+
 
     </head>
 
@@ -45,16 +47,29 @@
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
+
+            // Creates a box
+            testVelocityInitial = new BABYLON.Vector3(0,50,0);
+            testVelocityCurrent = new BABYLON.Vector3(0,50,0);
+            pos1 = new BABYLON.Vector3(0,0,0);
+            pos2 = new BABYLON.Vector3(2,2,2);
+            astroBox = new AstroObject(1,2, testVelocityCurrent, testVelocityCurrent, pos1);
+            astroBox2 = new AstroObject(1,2, testVelocityCurrent, testVelocityCurrent, pos2)
             const box1 = BABYLON.MeshBuilder.CreateBox("Box",
-                {height: 1});
+                {height: astroBox.radius});
+            const sphere1 = BABYLON.MeshBuilder.CreateSphere("sphere",
+                {diameter: astroBox2.radius});
+            //testPosition = new BABYLON.Vector3(2,2,2);
+            sphere1.position = astroBox2.initialPosition;
+            
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
-                box1.rotate(BABYLON.Axis.Y, Math.PI / 150, BABYLON.Space.Local);
+                box1.rotate(BABYLON.Axis.Y, Math.PI / astroBox.currentVelocity.y, BABYLON.Space.Local);
                 matrix = box1.getWorldMatrix();
-                boxY += 0.0001;
-                local_pos = new BABYLON.Vector3(0,boxY,0)
-                box1.position = BABYLON.Vector3.TransformCoordinates(local_pos,matrix);
+                // boxY += 0.0001;
+                // local_pos = new BABYLON.Vector3(0,boxY,0)
+                // box1.position = BABYLON.Vector3.TransformCoordinates(local_pos,matrix);
             })
         
 
