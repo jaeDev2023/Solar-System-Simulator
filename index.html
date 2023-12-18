@@ -49,24 +49,17 @@
             light.intensity = 0.7;
 
             // Creates a box
-            testVelocityInitial = new BABYLON.Vector3(0,50,0);
-            testVelocityCurrent = new BABYLON.Vector3(0,50,0);
-            pos1 = new BABYLON.Vector3(0,0,0);
-            pos2 = new BABYLON.Vector3(2,2,2);
-            astroBox = new AstroObject(1,2, testVelocityCurrent, testVelocityCurrent, pos1);
-            astroBox2 = new AstroObject(1,2, testVelocityCurrent, testVelocityCurrent, pos2)
-            const box1 = BABYLON.MeshBuilder.CreateBox("Box",
-                {height: astroBox.radius});
-            const sphere1 = BABYLON.MeshBuilder.CreateSphere("sphere",
-                {diameter: astroBox2.radius});
-            //testPosition = new BABYLON.Vector3(2,2,2);
-            sphere1.position = astroBox2.initialPosition;
+            const spriteManagerTrees = new BABYLON.SpriteManager("treesManager",
+                "/images/testArrow.png",
+                2000,
+                {width: 512, height: 1024});
+            const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
+            tree.width = 1;
+            tree.height = 2;
             
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
-                box1.rotate(BABYLON.Axis.Y, Math.PI / astroBox.currentVelocity.y, BABYLON.Space.Local);
-                matrix = box1.getWorldMatrix();
                 // boxY += 0.0001;
                 // local_pos = new BABYLON.Vector3(0,boxY,0)
                 // box1.position = BABYLON.Vector3.TransformCoordinates(local_pos,matrix);
