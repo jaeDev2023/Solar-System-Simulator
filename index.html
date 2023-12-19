@@ -28,8 +28,6 @@
         const createScene = function () {
             // Creates a basic Babylon Scene object
             const scene = new BABYLON.Scene(engine);
-            var boxY = 0;
-            var matrix;
 
             // Creates and positions a free camera
             const camera = new BABYLON.FreeCamera("camera1", 
@@ -52,20 +50,15 @@
             const spriteManagerTrees = new BABYLON.SpriteManager("treesManager",
                 "/images/testArrow.png",
                 2000,
-                {width: 512, height: 1024});
+                {width: 464, height: 159});
             const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
             tree.width = 1;
             tree.height = 2;
-            
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
-                // boxY += 0.0001;
-                // local_pos = new BABYLON.Vector3(0,boxY,0)
-                // box1.position = BABYLON.Vector3.TransformCoordinates(local_pos,matrix);
             })
-        
-
+            
             return scene;
         };
         const scene = createScene(); //Call the createScene function
