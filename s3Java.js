@@ -8,3 +8,4 @@ class AstroObject {
         this.initialPosition = new BABYLON.Vector3(initialPosition.x, initialPosition.y, initialPosition.z);
     }
 }
+

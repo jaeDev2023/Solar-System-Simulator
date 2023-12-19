@@ -47,16 +47,27 @@
             light.intensity = 0.7;
 
             // Creates a box
-            const spriteManagerTrees = new BABYLON.SpriteManager("treesManager",
-                "/images/testArrow.png",
-                2000,
-                {width: 464, height: 159});
-            const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
-            tree.width = 1;
-            tree.height = 2;
+            const spriteManagerOrange = new BABYLON.SpriteManager("orangeManager",
+                "/images/orangeSprite.png",
+                20,
+                {width: 500, height: 500});
+            const orange = new BABYLON.Sprite("orange", spriteManagerOrange);
+            orange.width = 1;
+            orange.height = 1;
+
+            const spriteManagerBlue = new BABYLON.SpriteManager("blueManager",
+                "/images/blueSprite.png",
+                20,
+                {width: 500, height: 500});
+            const blue = new BABYLON.Sprite("blue", spriteManagerBlue);
+            blue.width = 1;
+            blue.height = 1;
+
+            blue.position = new BABYLON.Vector3(4,0,0);
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
+
             })
             
             return scene;
