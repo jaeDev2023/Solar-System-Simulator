@@ -1,11 +1,29 @@
 class AstroObject {
-    constructor(mass, radius, initialVelocity, currentVelocity, initialPosition)
+    constructor(mass, radius, initialVelocity, initialPosition)
     {
         this.mass = mass;
         this.radius = radius;
-        this.initialVelocity = new BABYLON.Vector3(initialVelocity.x, initialVelocity.y,initialVelocity.z);
-        this.currentVelocity = new BABYLON.Vector3(currentVelocity.x, currentVelocity.y,currentVelocity.z);
-        this.initialPosition = new BABYLON.Vector3(initialPosition.x, initialPosition.y, initialPosition.z);
+        this.Velocity = initialVelocity;
+        this.position = initialPosition;
+        
+    }
+    
+    UpdateVelocity (astroBodies, timeStep)
+    {
+        for(let body = 0; body < astroBodies.length; body++)
+        {
+            if(astroBodies[body]!= this)
+            {
+
+                let squareDistance = (this.position.subtract(body.position));
+            }
+        }
+        //console.log("--------");
+    }
+
+    updatePostion (timeStep)
+    {
+        this.position += currentVelocity * timeStep;
     }
 }
 

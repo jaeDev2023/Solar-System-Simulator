@@ -46,7 +46,7 @@
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
 
-            // Creates a box
+            // Creates a sprite
             const spriteManagerOrange = new BABYLON.SpriteManager("orangeManager",
                 "/images/orangeSprite.png",
                 20,
@@ -64,10 +64,22 @@
             blue.height = 1;
 
             blue.position = new BABYLON.Vector3(4,0,0);
+            let testBodies = [orange, blue];
+            let testPosition = new BABYLON.Vector3(1,1,1);
+            let testPosition2 = new BABYLON.Vector3(3,3,3);
+            let testVelocity = new BABYLON.Vector3(1,1,1);
+            let testAstroObject = new AstroObject(1, 1, testVelocity, blue.position);
+            let testAstroObject2 = new AstroObject(1, 1, testVelocity, blue.position);
+            let testBodies2 = [testAstroObject, testAstroObject2];
+            console.log(testAstroObject.position);
+            console.log(testPosition.subtract(testPosition2));
+
+            
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
-
+                
+                testAstroObject.UpdateVelocity(testBodies2,1);
             })
             
             return scene;
