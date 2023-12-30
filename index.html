@@ -28,6 +28,7 @@
         const createScene = function () {
             // Creates a basic Babylon Scene object
             const scene = new BABYLON.Scene(engine);
+            const gravitationConstant = 0.05; // Changable for right now. needs to be global
 
             // Creates and positions a free camera
             const camera = new BABYLON.FreeCamera("camera1", 
@@ -73,14 +74,15 @@
             let testBodies2 = [testAstroObject, testAstroObject2];
             console.log(testAstroObject.position);
             console.log(testPosition.subtract(testPosition2));
-            // Testing git
+            
+            
 
             
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
                 
-                testAstroObject.UpdateVelocity(testBodies2,1);
+                testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
             })
             
             return scene;
