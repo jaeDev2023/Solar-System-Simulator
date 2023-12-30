@@ -12,10 +12,8 @@ class AstroObject {
     {
         for(let body = 0; body < astroBodies.length; body++)
         {
-            if(astroBodies[body]= this)
+            if(astroBodies[body] != this)
             {
-                //console.log(this.position);
-
                 //let squareDistance = (this.position.subtract(body.position));
             }
         }
@@ -27,4 +25,5 @@ class AstroObject {
         this.position += currentVelocity * timeStep;
     }
 }
+
 
