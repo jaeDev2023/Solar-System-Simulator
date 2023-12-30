@@ -16,10 +16,10 @@ class AstroObject {
             if(astroBodies[body] != this)
             {
                 const squareDistance = (this.position.subtract(astroBodies[body].position));
-                const forceDirection = (astroBodies[body].position.subtract(this.position)).normalize(); // you may to use new syntax for these.
+                const forceDirection = (astroBodies[body].position.subtract(this.position)).normalize(); // you may to use "new vector3" syntax for these.
                 const force = forceDirection * gravConstant * this.mass * astroBodies[body].mass / squareDistance;
                 const acceleration = force / this.mass;
-                this.Velocity += acceleration * timeStep;
+                this.Velocity += acceleration * timeStep; // Acceleration may need to be a vector3, so this may be incorrect.
                 
             }
         }
