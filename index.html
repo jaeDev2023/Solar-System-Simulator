@@ -75,6 +75,7 @@
             console.log(testAstroObject.position);
             console.log(testPosition.subtract(testPosition2));
             
+            testAstroObject.UpdateVelocity(testBodies2, 2 , gravitationConstant);
             
 
             
@@ -82,7 +83,7 @@
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
                 
-                testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+                //testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
             })
             
             return scene;

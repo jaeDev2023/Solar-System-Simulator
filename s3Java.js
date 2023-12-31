@@ -11,29 +11,24 @@ class AstroObject {
     UpdateVelocity (astroBodies, timeStep, gravConstant)
     {
         // Need to create a global definition for the universal constant.
-        for(let body = 0; body < astroBodies.length; body++)
+        for(let i = 0; i < astroBodies.length; i++)
         {
-            if(astroBodies[body] != this)
-            {
-                const squareDistance = (this.position.subtract(astroBodies[body].position));
-                const forceDirection = (astroBodies[body].position.subtract(this.position)).normalize(); // you may to use "new vector3" syntax for these.
-                const force = forceDirection * gravConstant * this.mass * astroBodies[body].mass / squareDistance;
-                const acceleration = force / this.mass;
-                this.Velocity += acceleration * timeStep; // Acceleration may need to be a vector3, so this may be incorrect.
-                
-            }
+            let otherBody = astroBodies[i];
+            let sqrDst = BABYLON.Vector3.DistanceSquared(otherBody.position, this.position);
+            let forceDir = otherBody.position.subtract(this.position).normalize();
+            let force = forceDir.scale(gravConstant * this.mass * otherBody.mass / sqrDst);
+            let acceleration = force.scale(1 / this.mass);
+            this.velocity = this.velocity.add(acceleration);
+            //this.velocity = this.velocity.add(acceleration.scale(timeStep));
         }
-        //console.log("--------");
     }
 
-    updatePostion (timeStep)
+    updatePosition (timeStep)
     {
-        this.position += currentVelocity * timeStep;
+        this.position += this.velocity * timeStep;
     }
 
     printDebugging ()
     {
     }
 }
-
-
