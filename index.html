@@ -75,15 +75,20 @@
             console.log(testAstroObject.position);
             console.log(testPosition.subtract(testPosition2));
             
-            testAstroObject.UpdateVelocity(testBodies2, 2 , gravitationConstant);
+            testAstroObject.position = new BABYLON.Vector3(16,16,16);
+            console.log(testAstroObject.position + "-------------"); 
             
+            testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+            testAstroObject.updatePosition(1);
+            console.log(testAstroObject.position + "-------------"); 
 
-            
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {
                 
-                //testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+                testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+                testAstroObject.updatePosition(1);
+                blue.position = testAstroObject.position;
             })
             
             return scene;

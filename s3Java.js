@@ -3,7 +3,7 @@ class AstroObject {
     {
         this.mass = mass;
         this.radius = radius;
-        this.Velocity = initialVelocity;
+        this.velocity = initialVelocity;
         this.position = initialPosition;
         
     }
@@ -14,21 +14,25 @@ class AstroObject {
         for(let i = 0; i < astroBodies.length; i++)
         {
             let otherBody = astroBodies[i];
-            let sqrDst = BABYLON.Vector3.DistanceSquared(otherBody.position, this.position);
-            let forceDir = otherBody.position.subtract(this.position).normalize();
-            let force = forceDir.scale(gravConstant * this.mass * otherBody.mass / sqrDst);
-            let acceleration = force.scale(1 / this.mass);
-            this.velocity = this.velocity.add(acceleration);
-            //this.velocity = this.velocity.add(acceleration.scale(timeStep));
+            if(otherBody != this)
+            {
+                let sqrDst = BABYLON.Vector3.DistanceSquared(otherBody.position, this.position);
+                let forceDir = otherBody.position.subtract(this.position).normalize();
+                let force = forceDir.scale(gravConstant * this.mass * otherBody.mass / sqrDst);
+                let acceleration = force.scale(1 / this.mass);
+                this.velocity = this.velocity.add(acceleration.scale(timeStep));
+            }            
         }
     }
 
     updatePosition (timeStep)
     {
-        this.position += this.velocity * timeStep;
+        this.position = this.velocity.scale(timeStep);
+        //console.log(this.position);
     }
 
     printDebugging ()
     {
+        //console.log(this.position);
     }
 }
