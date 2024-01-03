@@ -17,6 +17,7 @@ class AstroObject {
             if(otherBody != this)
             {
                 let sqrDst = BABYLON.Vector3.DistanceSquared(otherBody.position, this.position);
+                console.log(sqrDst + "----------------");
                 let forceDir = otherBody.position.subtract(this.position).normalize();
                 let force = forceDir.scale(gravConstant * this.mass * otherBody.mass / sqrDst);
                 let acceleration = force.scale(1 / this.mass);
@@ -28,7 +29,8 @@ class AstroObject {
     updatePosition (timeStep)
     {
         this.position = this.velocity.scale(timeStep);
-        //console.log(this.position);
+        console.log(this.position);
+
     }
 
     printDebugging ()

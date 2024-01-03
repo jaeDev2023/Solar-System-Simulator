@@ -28,7 +28,29 @@
         const createScene = function () {
             // Creates a basic Babylon Scene object
             const scene = new BABYLON.Scene(engine);
-            const gravitationConstant = 0.05; // Changable for right now. needs to be global
+
+            // Variables
+            const gravitationConstant = 0.0005; // Changable for right now. needs to be global
+            let testPosition = new BABYLON.Vector3(1,1,1);
+            let testPosition2 = new BABYLON.Vector3(3,3,3);
+            let testVelocity = new BABYLON.Vector3(1,1,1);
+
+            // Creates sprites
+            const spriteManagerOrange = new BABYLON.SpriteManager("orangeManager",
+                "/images/orangeSprite.png", 20, {width: 500, height: 500});
+            const orange = new BABYLON.Sprite("orange", spriteManagerOrange);
+            orange.width = 1;
+            orange.height = 1;
+
+            const spriteManagerBlue = new BABYLON.SpriteManager("blueManager",
+                "/images/blueSprite.png", 20, {width: 500, height: 500});
+            const blue = new BABYLON.Sprite("blue", spriteManagerBlue);
+            blue.width = 1;
+            blue.height = 1;
+
+            let testAstroObject = new AstroObject(1, 1, testVelocity, blue.position);
+            let testAstroObject2 = new AstroObject(1, 1, testVelocity, blue.position);
+            let testBodies2 = [testAstroObject, testAstroObject2];
 
             // Creates and positions a free camera
             const camera = new BABYLON.FreeCamera("camera1", 
@@ -47,48 +69,24 @@
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
 
-            // Creates a sprite
-            const spriteManagerOrange = new BABYLON.SpriteManager("orangeManager",
-                "/images/orangeSprite.png",
-                20,
-                {width: 500, height: 500});
-            const orange = new BABYLON.Sprite("orange", spriteManagerOrange);
-            orange.width = 1;
-            orange.height = 1;
-
-            const spriteManagerBlue = new BABYLON.SpriteManager("blueManager",
-                "/images/blueSprite.png",
-                20,
-                {width: 500, height: 500});
-            const blue = new BABYLON.Sprite("blue", spriteManagerBlue);
-            blue.width = 1;
-            blue.height = 1;
-
+            // Update positions for testing
             blue.position = new BABYLON.Vector3(4,0,0);
-            let testBodies = [orange, blue];
-            let testPosition = new BABYLON.Vector3(1,1,1);
-            let testPosition2 = new BABYLON.Vector3(3,3,3);
-            let testVelocity = new BABYLON.Vector3(1,1,1);
-            let testAstroObject = new AstroObject(1, 1, testVelocity, blue.position);
-            let testAstroObject2 = new AstroObject(1, 1, testVelocity, blue.position);
-            let testBodies2 = [testAstroObject, testAstroObject2];
-            console.log(testAstroObject.position);
-            console.log(testPosition.subtract(testPosition2));
             
-            testAstroObject.position = new BABYLON.Vector3(16,16,16);
-            console.log(testAstroObject.position + "-------------"); 
-            
-            testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
-            testAstroObject.updatePosition(1);
-            console.log(testAstroObject.position + "-------------"); 
+            testAstroObject.position = new BABYLON.Vector3(1,1,50);
+            blue.position = testAstroObject.position;
+
+            testAstroObject2.position = new BABYLON.Vector3(0,0,0);
+            orange.position = testAstroObject2.position;
 
 
             // These functions run during the program's runtime.
-            scene.registerAfterRender(function() {
-                
-                testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+            scene.registerAfterRender(function() {    
+                /* testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
+                testAstroObject2.UpdateVelocity(testBodies2,1, gravitationConstant);
                 testAstroObject.updatePosition(1);
+                testAstroObject2.updatePosition(1);
                 blue.position = testAstroObject.position;
+                orange.position = testAstroObject2.position; */
             })
             
             return scene;
