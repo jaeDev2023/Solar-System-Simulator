@@ -8,17 +8,15 @@
 
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
         <script src="/s3Java.js"></script>
-
-
     </head>
 
    <body>
-    <h1 id="header__main">Solar System Simulator</h1>
-    <header class="header">
-        <button id="header__nav">SOL</button>
-        <button id="header__nav">Starbox</button>
-        <button id="header__nav">Scenarios</button>
-    </header>
+        <h1 id="header__main">Solar System Simulator</h1>
+        <header class="header">
+            <button id="header__nav">SOL</button>
+            <button id="header__nav">Starbox</button>
+            <button id="header__nav">Scenarios</button>
+        </header>
     
     <canvas id="renderCanvas"></canvas>
 
@@ -30,7 +28,8 @@
             const scene = new BABYLON.Scene(engine);
 
             // Variables
-            const gravitationConstant = 0.0005; // Changable for right now. needs to be global
+            gravitationConstant = 0.0005; // Changable for right now. needs to be global
+            globalTimeStep = 0.01;
             let testPosition = new BABYLON.Vector3(1,1,1);
             let testPosition2 = new BABYLON.Vector3(3,3,3);
             let testVelocity = new BABYLON.Vector3(1,1,1);
@@ -70,7 +69,6 @@
             light.intensity = 0.7;
 
             // Update positions for testing
-            blue.position = new BABYLON.Vector3(4,0,0);
             
             testAstroObject.position = new BABYLON.Vector3(1,1,50);
             blue.position = testAstroObject.position;
@@ -80,14 +78,18 @@
 
 
             // These functions run during the program's runtime.
-            scene.registerAfterRender(function() {    
-                /* testAstroObject.UpdateVelocity(testBodies2,1, gravitationConstant);
-                testAstroObject2.UpdateVelocity(testBodies2,1, gravitationConstant);
-                testAstroObject.updatePosition(1);
-                testAstroObject2.updatePosition(1);
+            scene.registerAfterRender(function() {   
+               /*  testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                testAstroObject2.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                testAstroObject.updatePosition(globalTimeStep);
+                testAstroObject2.updatePosition(globalTimeStep);
                 blue.position = testAstroObject.position;
                 orange.position = testAstroObject2.position; */
             })
+
+            scene.debugLayer.show({
+                embedMode: true,
+            });
             
             return scene;
         };
