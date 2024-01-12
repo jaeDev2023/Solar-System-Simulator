@@ -28,8 +28,8 @@
             const scene = new BABYLON.Scene(engine);
 
             // Variables
-            gravitationConstant = 0.0005; // Changable for right now. needs to be global
-            globalTimeStep = 0.01;
+            gravitationConstant = 6.674e-11; // Changable for right now. needs to be global
+            globalTimeStep = 1.01;
             let testPosition = new BABYLON.Vector3(1,1,1);
             let testPosition2 = new BABYLON.Vector3(3,3,3);
             let testVelocity = new BABYLON.Vector3(1,1,1);
@@ -51,12 +51,20 @@
             let testAstroObject2 = new AstroObject(1, 1, testVelocity, blue.position);
             let testBodies2 = [testAstroObject, testAstroObject2];
 
-            // Creates and positions a free camera
-            const camera = new BABYLON.FreeCamera("camera1", 
-                new BABYLON.Vector3(0, 5, -10), scene);
+            // Test mesh for camera follow testing
+            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere",
+            {diameter: 2}, scene);
+            sphere.position = new BABYLON.Vector3(0,2,0);
 
-            // Targets the camera to scene origin
-            camera.setTarget(BABYLON.Vector3.Zero());
+            // Creates and positions a free camera
+            var camera = new BABYLON.FollowCamera("FollowCam", 
+                new BABYLON.Vector3(0, 5, -10), scene);
+            camera.radius = 10;
+            camera.heightOffset = 10;
+            camera.rotationOffset = 0;
+            camera.cameraAcceleration = 0.005;
+            camera.maxCameraSpeed = 10;
+            camera.inputs.addMouseWheel();
 
             // This attaches the camera to the canvas
             camera.attachControl(canvas, true);
@@ -70,21 +78,29 @@
 
             // Update positions for testing
             
-            testAstroObject.position = new BABYLON.Vector3(1,1,50);
+            testAstroObject.position = new BABYLON.Vector3(1,1,25);
+            console.log(`tAO position before everything: ${testAstroObject.position}`);
             blue.position = testAstroObject.position;
-
-            testAstroObject2.position = new BABYLON.Vector3(0,0,0);
+            testAstroObject2.position = new BABYLON.Vector3(1, 1, 50);
             orange.position = testAstroObject2.position;
+            console.log(`orange's position: ${orange.position}`);
+            testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+            testAstroObject.UpdatePosition(globalTimeStep);
+            orange.position = testAstroObject.position;
+            console.log(`astroObject position post VU: ${testAstroObject.position}`);
+            console.log(`orange's new position: ${orange.position}`);
+
+            /* 
+            camera.setTarget(orange.position);
+            console.log(blue.position);
+            console.log(orange.position); */
+            console.log("================================");
+            camera.lockedTarget = sphere;
 
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-               /*  testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-                testAstroObject2.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-                testAstroObject.updatePosition(globalTimeStep);
-                testAstroObject2.updatePosition(globalTimeStep);
-                blue.position = testAstroObject.position;
-                orange.position = testAstroObject2.position; */
+                //sphere.position = sphere.position.add(new BABYLON.Vector3(0.1, 0.1, 0.1));
             })
 
             scene.debugLayer.show({
