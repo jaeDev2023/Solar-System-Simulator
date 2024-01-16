@@ -61,25 +61,26 @@
                 new BABYLON.Vector3(0, 5, -10), scene);
             camera.radius = 10;
             camera.heightOffset = 10;
-            //camera.rotationOffset = 0;
+            camera.rotationOffset = 0;
             camera.cameraAcceleration = 0.005;
             camera.maxCameraSpeed = 10;
             camera.inertia = 0;
             camera.upperRadiusLimit = 0.02;
-            camera.inputs.addMouseWheel();
-            */
+            camera.inputs.addMouseWheel(); */
 
-            // Arc follow camera
-            var camera = new BABYLON.ArcFollowCamera(
-                "FollowCam",
-                Math.PI / 2,
-                Math.PI / 2,
+            var camera = new BABYLON.ArcRotateCamera(
+                "arcRotateCam",
+                0,
+                0,
                 10,
-                sphere,
-                scene);
+                sphere.position,
+                scene
+            );
+           
 
             // This attaches the camera to the canvas
             camera.attachControl(canvas, true);
+            /* camera.lockedTarget = sphere; */
 
             // Creates a light, aiming 0,1,0 - to the sky
             const light = new BABYLON.HemisphericLight("light", 
@@ -107,12 +108,13 @@
             console.log(blue.position);
             console.log(orange.position); */
             console.log("================================");
-            camera.lockedTarget = sphere;
+            
 
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                //sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.1, 0.1));
+                sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.1, 0.1));
+                camera.target = sphere.position.clone();
             })
 
             scene.debugLayer.show({
