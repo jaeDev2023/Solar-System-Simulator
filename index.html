@@ -56,18 +56,6 @@
             {diameter: 2}, scene);
             sphere.position = new BABYLON.Vector3(0,2,0);
 
-            // Creates and positions a free camera
-            /* var camera = new BABYLON.FollowCamera("FollowCam", 
-                new BABYLON.Vector3(0, 5, -10), scene);
-            camera.radius = 10;
-            camera.heightOffset = 10;
-            camera.rotationOffset = 0;
-            camera.cameraAcceleration = 0.005;
-            camera.maxCameraSpeed = 10;
-            camera.inertia = 0;
-            camera.upperRadiusLimit = 0.02;
-            camera.inputs.addMouseWheel(); */
-
             var camera = new BABYLON.ArcRotateCamera(
                 "arcRotateCam",
                 0,
@@ -92,28 +80,16 @@
             // Update positions for testing
             
             testAstroObject.position = new BABYLON.Vector3(1,1,25);
-            console.log(`tAO position before everything: ${testAstroObject.position}`);
             blue.position = testAstroObject.position;
             testAstroObject2.position = new BABYLON.Vector3(1, 1, 50);
             orange.position = testAstroObject2.position;
-            console.log(`orange's position: ${orange.position}`);
             testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
             testAstroObject.UpdatePosition(globalTimeStep);
             orange.position = testAstroObject.position;
-            console.log(`astroObject position post VU: ${testAstroObject.position}`);
-            console.log(`orange's new position: ${orange.position}`);
-
-            /* 
-            camera.setTarget(orange.position);
-            console.log(blue.position);
-            console.log(orange.position); */
-            console.log("================================");
-            
-
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.1, 0.1));
+                sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.01, 0.01));
                 camera.target = sphere.position.clone();
             })
 
