@@ -56,19 +56,26 @@
             {diameter: 2}, scene);
             sphere.position = new BABYLON.Vector3(0,2,0);
 
+            var sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere",
+            {diameter: 1}, scene);
+            sphere2.position = orange.position;
+
             var camera = new BABYLON.ArcRotateCamera(
                 "arcRotateCam",
                 0,
-                0,
+                0.1,
                 10,
                 sphere.position,
                 scene
-            );
-           
+            );           
 
             // This attaches the camera to the canvas
             camera.attachControl(canvas, true);
-            /* camera.lockedTarget = sphere; */
+            camera.allowUpsideDown = true;
+            camera.lowerRadiusLimit = 15;
+            camera.upperRadiusLimit = 50;
+            //camera.lowerBetaLimit = null;
+            //camera.upperBetaLimit = null;
 
             // Creates a light, aiming 0,1,0 - to the sky
             const light = new BABYLON.HemisphericLight("light", 
@@ -83,13 +90,22 @@
             blue.position = testAstroObject.position;
             testAstroObject2.position = new BABYLON.Vector3(1, 1, 50);
             orange.position = testAstroObject2.position;
+            console.log(testAstroObject.velocity);
             testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
             testAstroObject.UpdatePosition(globalTimeStep);
             orange.position = testAstroObject.position;
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.01, 0.01));
+                //sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.01, 0.01));
+                testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                testAstroObject2.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                testAstroObject.UpdatePosition(globalTimeStep);
+                testAstroObject2.UpdatePosition(globalTimeStep);
+                sphere.position = testAstroObject.position;
+                sphere2.position = testAstroObject2.position;
+
+                
                 camera.target = sphere.position.clone();
             })
 
