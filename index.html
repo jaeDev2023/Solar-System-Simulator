@@ -34,21 +34,8 @@
             let testPosition2 = new BABYLON.Vector3(3,3,3);
             let testVelocity = new BABYLON.Vector3(1,1,1);
 
-            // Creates sprites
-            const spriteManagerOrange = new BABYLON.SpriteManager("orangeManager",
-                "/images/orangeSprite.png", 20, {width: 500, height: 500});
-            const orange = new BABYLON.Sprite("orange", spriteManagerOrange);
-            orange.width = 1;
-            orange.height = 1;
-
-            const spriteManagerBlue = new BABYLON.SpriteManager("blueManager",
-                "/images/blueSprite.png", 20, {width: 500, height: 500});
-            const blue = new BABYLON.Sprite("blue", spriteManagerBlue);
-            blue.width = 1;
-            blue.height = 1;
-
-            let testAstroObject = new AstroObject(1, 1, testVelocity, blue.position);
-            let testAstroObject2 = new AstroObject(1, 1, testVelocity, blue.position);
+            let testAstroObject = new AstroObject(100000000, 1, testVelocity, testPosition);
+            let testAstroObject2 = new AstroObject(100, 1, testVelocity, testPosition2);
             let testBodies2 = [testAstroObject, testAstroObject2];
 
             // Test mesh for camera follow testing
@@ -58,7 +45,6 @@
 
             var sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere",
             {diameter: 1}, scene);
-            sphere2.position = orange.position;
 
             var camera = new BABYLON.ArcRotateCamera(
                 "arcRotateCam",
@@ -84,17 +70,6 @@
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
 
-            // Update positions for testing
-            
-            testAstroObject.position = new BABYLON.Vector3(1,1,25);
-            blue.position = testAstroObject.position;
-            testAstroObject2.position = new BABYLON.Vector3(1, 1, 50);
-            orange.position = testAstroObject2.position;
-            console.log(testAstroObject.velocity);
-            testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-            testAstroObject.UpdatePosition(globalTimeStep);
-            orange.position = testAstroObject.position;
-
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
                 //sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.01, 0.01));
@@ -105,7 +80,7 @@
                 sphere.position = testAstroObject.position;
                 sphere2.position = testAstroObject2.position;
 
-                
+                // Reposition camera to follow the sphere's position
                 camera.target = sphere.position.clone();
             })
 
