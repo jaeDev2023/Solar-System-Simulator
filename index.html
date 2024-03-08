@@ -28,23 +28,28 @@
             const scene = new BABYLON.Scene(engine);
 
             // Variables
-            gravitationConstant = 6.674e-11; // Changable for right now. needs to be global
-            globalTimeStep = 1.01;
-            let testPosition = new BABYLON.Vector3(1,1,1);
-            let testPosition2 = new BABYLON.Vector3(3,3,3);
-            let testVelocity = new BABYLON.Vector3(1,1,1);
-
-            let testAstroObject = new AstroObject(100000000, 1, testVelocity, testPosition);
-            let testAstroObject2 = new AstroObject(100, 1, testVelocity, testPosition2);
-            let testBodies2 = [testAstroObject, testAstroObject2];
+            //gravitationConstant = 6.674e-11; // Changable for right now. needs to be global
+            //gravitationConstant = 1.2; // Changable for right now. needs to be global
+            gravitationConstant = 0.0001;
+            //globalTimeStep = 0.005;
+            globalTimeStep = 0.0009;
+            let testPosition = new BABYLON.Vector3(2, 0, 0);
+            let testPosition2 = new BABYLON.Vector3(0, 0, 0);
+            let testVelocity = new BABYLON.Vector3(0, 72.9, 0);
+            let testVelocity2 = new BABYLON.Vector3(0, 0, 0);
 
             // Test mesh for camera follow testing
-            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere",
+            const sphere = BABYLON.MeshBuilder.CreateSphere("sphere",
             {diameter: 2}, scene);
-            sphere.position = new BABYLON.Vector3(0,2,0);
+            sphere.position = testPosition;
 
-            var sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere",
-            {diameter: 1}, scene);
+            const sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere",
+            {diameter: 4}, scene);
+            sphere2.position = testPosition2;
+
+            let testAstroObject = new AstroObject(1, 2, testVelocity, testPosition, sphere);
+            let testAstroObject2 = new AstroObject(10000, 4, testVelocity2, testPosition2, sphere2);
+            let testBodies2 = [testAstroObject, testAstroObject2];
 
             var camera = new BABYLON.ArcRotateCamera(
                 "arcRotateCam",
@@ -69,17 +74,25 @@
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
+            
+            // Testing physics values for errors.
+            console.log("--------------testing values---------------");
+            // testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+            // testAstroObject.UpdatePosition(globalTimeStep);
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                //sphere.position = sphere.position.add(new BABYLON.Vector3(0.01, 0.01, 0.01));
+                // while distances bettween the two objects > critical threshold
+                // run the code below
                 testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
                 testAstroObject2.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+
                 testAstroObject.UpdatePosition(globalTimeStep);
                 testAstroObject2.UpdatePosition(globalTimeStep);
+
                 sphere.position = testAstroObject.position;
                 sphere2.position = testAstroObject2.position;
-
+                
                 // Reposition camera to follow the sphere's position
                 camera.target = sphere.position.clone();
             })
