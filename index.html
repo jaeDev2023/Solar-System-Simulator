@@ -32,11 +32,11 @@
             //gravitationConstant = 1.2; // Changable for right now. needs to be global
             gravitationConstant = 0.0001;
             //globalTimeStep = 0.005;
-            globalTimeStep = 0.0009;
-            let testPosition = new BABYLON.Vector3(2, 0, 0);
-            let testPosition2 = new BABYLON.Vector3(0, 0, 0);
-            let testVelocity = new BABYLON.Vector3(0, 72.9, 0);
-            let testVelocity2 = new BABYLON.Vector3(0, 0, 0);
+            globalTimeStep = 0.1;
+            let testPosition = new BABYLON.Vector3(10, 0, 0); // moon
+            let testPosition2 = new BABYLON.Vector3(0, 0, 0); // planet
+            let testVelocity = new BABYLON.Vector3(0, 0, -1);
+            let testVelocity2 = new BABYLON.Vector3(0,0, 0);
 
             // Test mesh for camera follow testing
             const sphere = BABYLON.MeshBuilder.CreateSphere("sphere",
@@ -48,25 +48,18 @@
             sphere2.position = testPosition2;
 
             let testAstroObject = new AstroObject(1, 2, testVelocity, testPosition, sphere);
-            let testAstroObject2 = new AstroObject(10000, 4, testVelocity2, testPosition2, sphere2);
+            let testAstroObject2 = new AstroObject(100000, 4, testVelocity2, testPosition2, sphere2);
             let testBodies2 = [testAstroObject, testAstroObject2];
 
-            var camera = new BABYLON.ArcRotateCamera(
-                "arcRotateCam",
-                0,
-                0.1,
-                10,
-                sphere.position,
+            var camera = new BABYLON.FreeCamera(
+                "camera1",
+                new BABYLON.Vector3(0, 50, 0),
                 scene
-            );           
-
-            // This attaches the camera to the canvas
+            );      
+            camera.inputs.addMouseWheel() ;
+            camera.setTarget(new BABYLON.Vector3.Zero());
             camera.attachControl(canvas, true);
-            camera.allowUpsideDown = true;
-            camera.lowerRadiusLimit = 15;
-            camera.upperRadiusLimit = 50;
-            //camera.lowerBetaLimit = null;
-            //camera.upperBetaLimit = null;
+
 
             // Creates a light, aiming 0,1,0 - to the sky
             const light = new BABYLON.HemisphericLight("light", 
@@ -74,11 +67,6 @@
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
-            
-            // Testing physics values for errors.
-            console.log("--------------testing values---------------");
-            // testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-            // testAstroObject.UpdatePosition(globalTimeStep);
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
@@ -92,9 +80,6 @@
 
                 sphere.position = testAstroObject.position;
                 sphere2.position = testAstroObject2.position;
-                
-                // Reposition camera to follow the sphere's position
-                camera.target = sphere.position.clone();
             })
 
             scene.debugLayer.show({
