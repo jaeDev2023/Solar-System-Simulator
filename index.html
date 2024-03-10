@@ -28,28 +28,29 @@
             const scene = new BABYLON.Scene(engine);
 
             // Variables
-            //gravitationConstant = 6.674e-11; // Changable for right now. needs to be global
-            //gravitationConstant = 1.2; // Changable for right now. needs to be global
             gravitationConstant = 0.0001;
-            //globalTimeStep = 0.005;
             globalTimeStep = 0.1;
-            let testPosition = new BABYLON.Vector3(10, 0, 0); // moon
-            let testPosition2 = new BABYLON.Vector3(0, 0, 0); // planet
-            let testVelocity = new BABYLON.Vector3(0, 0, -1);
-            let testVelocity2 = new BABYLON.Vector3(0,0, 0);
+            let moonPosition = new BABYLON.Vector3(10, 0, 0); // moon
+            let planetPosition = new BABYLON.Vector3(0, 0, 0); // planet
+            let moonVelocity = new BABYLON.Vector3(0, 0, -1);
+            let planetVelocity = new BABYLON.Vector3(0,0, 0);
+            let moonMass = 1;
+            let planetMass = 100000;
+            let moonRadius = 2;
+            let planetRadius = 4
 
             // Test mesh for camera follow testing
-            const sphere = BABYLON.MeshBuilder.CreateSphere("sphere",
-            {diameter: 2}, scene);
-            sphere.position = testPosition;
+            const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
+            {diameter: moonRadius}, scene);
+            moonMesh.position = moonPosition;
 
-            const sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere",
-            {diameter: 4}, scene);
-            sphere2.position = testPosition2;
+            const planetMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
+            {diameter: planetRadius}, scene);
+            planetMesh.position = planetPosition;
 
-            let testAstroObject = new AstroObject(1, 2, testVelocity, testPosition, sphere);
-            let testAstroObject2 = new AstroObject(100000, 4, testVelocity2, testPosition2, sphere2);
-            let testBodies2 = [testAstroObject, testAstroObject2];
+            let moon = new AstroObject(moonMass, moonRadius, moonVelocity, moonPosition, moonMesh);
+            let planet = new AstroObject(planetMass, planetRadius, planetVelocity, planetPosition, planetMesh);
+            let testBodies2 = [moon, planet];
 
             var camera = new BABYLON.FreeCamera(
                 "camera1",
@@ -72,19 +73,15 @@
             scene.registerAfterRender(function() {   
                 // while distances bettween the two objects > critical threshold
                 // run the code below
-                testAstroObject.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-                testAstroObject2.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                moon.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
+                planet.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
 
-                testAstroObject.UpdatePosition(globalTimeStep);
-                testAstroObject2.UpdatePosition(globalTimeStep);
+                moon.UpdatePosition(globalTimeStep);
+                planet.UpdatePosition(globalTimeStep);
 
-                sphere.position = testAstroObject.position;
-                sphere2.position = testAstroObject2.position;
+                moonMesh.position = moon.position;
+                planetMesh.position = planet.position;
             })
-
-            scene.debugLayer.show({
-                embedMode: true,
-            });
             
             return scene;
         };
@@ -98,8 +95,5 @@
                 engine.resize();
         });
 	</script>
-    <!--Test-->
-
    </body>
-
 </html>
