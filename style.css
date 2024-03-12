@@ -20,4 +20,5 @@ html, body {
 h1
 {
     text-align: center;
+    /* background-image: url("images/textures/skybox/skybox_nx.jpg") */
 }
