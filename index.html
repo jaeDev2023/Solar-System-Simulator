@@ -73,15 +73,7 @@
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                moon.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-                planet.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
-
-                moon.UpdatePosition(globalTimeStep);
-                planet.UpdatePosition(globalTimeStep);
-
-                moonMesh.position = moon.position;
-                planetMesh.position = planet.position;
-                //physicsController.UpdateObjectPositions(testBodies2, );
+                physicsController.UpdateObjectPositions(testBodies2, globalTimeStep, gravitationConstant);
 
             })
             
