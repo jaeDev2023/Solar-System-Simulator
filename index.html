@@ -8,6 +8,7 @@
 
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
         <script src="AstroObject.js"></script>
+        <script src="GravityCalculator.js"></script>
     </head>
 
    <body>
@@ -38,6 +39,7 @@
             let planetMass = 100000;
             let moonRadius = 2;
             let planetRadius = 4
+            const physicsController = new GravityCalculator();
 
             // Test mesh for camera follow testing
             const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
@@ -71,8 +73,6 @@
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
-                // while distances bettween the two objects > critical threshold
-                // run the code below
                 moon.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
                 planet.UpdateVelocity(testBodies2, globalTimeStep, gravitationConstant);
 
@@ -81,6 +81,8 @@
 
                 moonMesh.position = moon.position;
                 planetMesh.position = planet.position;
+                //physicsController.UpdateObjectPositions(testBodies2, );
+
             })
             
             return scene;
