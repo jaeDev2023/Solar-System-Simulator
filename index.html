@@ -5,8 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>Solar System Simulator: S3</title>
         <link rel="stylesheet" type="text/css" href="style.css">
-
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="AstroObject.js"></script>
         <script src="GravityCalculator.js"></script>
     </head>
@@ -30,7 +30,7 @@
 
             // Variables
             gravitationConstant = 0.0001;
-            globalTimeStep = 0.1;
+            globalTimeStep = .1;
             let moonPosition = new BABYLON.Vector3(10, 0, 0); // moon
             let planetPosition = new BABYLON.Vector3(0, 0, 0); // planet
             let moonVelocity = new BABYLON.Vector3(0, 0, -1);
@@ -70,11 +70,35 @@
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
+            
+            // Add advance texture to add GUI elements, like text and sliders.
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+            const gravTextBlock = new BABYLON.GUI.TextBlock();
+            gravTextBlock.text = "Time Step Value";
+            gravTextBlock.color = "white";
+            gravTextBlock.fontSize = 24;
+            gravTextBlock.left = "-290px";
+            gravTextBlock.top = "-340px"
+            advancedTexture.addControl(gravTextBlock);;
+
+
+            const slider = new BABYLON.GUI.Slider();
+            slider.minimum = 0.01;
+            slider.maximum = 0.5;
+            slider.value = globalTimeStep;
+            slider.width = "200px";
+            slider.height = "20px";
+            slider.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+            slider.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+            advancedTexture.addControl(slider);
+
+            slider.onValueChangedObservable.add(function (value) {
+                globalTimeStep = value;
+            });
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
                 physicsController.UpdateObjectPositions(testBodies2, globalTimeStep, gravitationConstant);
-
             })
             
             return scene;
