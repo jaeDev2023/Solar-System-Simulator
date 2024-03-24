@@ -73,28 +73,81 @@
             
             // Add advance texture to add GUI elements, like text and sliders.
             var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+            
+            // Grid for GUI positioning on the canvas
+            var grid = new BABYLON.GUI.Grid();
+            advancedTexture.addControl(grid);
+            grid.addColumnDefinition(1);
+
+            // Add Rows for the control
+            for(let i = 0; i < 13; i++)
+            {
+                grid.addRowDefinition(1);
+            }
+            grid.width = "20%";
+            grid.height = "100%";
+            grid.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+            grid.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+
             const gravTextBlock = new BABYLON.GUI.TextBlock();
             gravTextBlock.text = "Time Step Value";
-            gravTextBlock.color = "white";
-            gravTextBlock.fontSize = 24;
-            gravTextBlock.left = "-291px";
-            gravTextBlock.top = "-340px"
-            advancedTexture.addControl(gravTextBlock);;
+            gravTextBlock.width = "100%";
+            gravTextBlock.color = "black";
+            gravTextBlock.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER; // Center horizontally
+            gravTextBlock.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; // Center vertically
+            grid.addControl(gravTextBlock, 0, 0);
+            grid.background = "rgba(255, 255, 255, 0.25)";
 
+            var timeStepSlider = new BABYLON.GUI.Slider();
+            timeStepSlider.minimum = 0.01;
+            timeStepSlider.maximum = 0.25;
+            timeStepSlider.width = "100%"
+            timeStepSlider.height = "25%"
+            timeStepSlider.value = globalTimeStep;
+            grid.addControl(timeStepSlider, 1, 0);
 
-            const slider = new BABYLON.GUI.Slider();
-            slider.minimum = 0.01;
-            slider.maximum = 0.5;
-            slider.value = globalTimeStep;
-            slider.width = "200px";
-            slider.height = "20px";
-            slider.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-            slider.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-            advancedTexture.addControl(slider);
-
-            slider.onValueChangedObservable.add(function (value) {
+            const newObjectText = new BABYLON.GUI.TextBlock();
+            newObjectText.text = "New Object Values";
+            newObjectText.width = "100%";
+            newObjectText.color = "black";
+            newObjectText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER; // Center horizontally
+            newObjectText.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; // Center vertically
+            grid.addControl(newObjectText, 2, 0);
+            timeStepSlider.onValueChangedObservable.add(function (value) {
                 globalTimeStep = value;
             });
+
+            // Create stack panel for the mass settings
+            var massStackPanel = new BABYLON.GUI.StackPanel();
+            massStackPanel.isVertical = false;
+
+            // Mass Text Block
+            var massTextBlock = new BABYLON.GUI.TextBlock();
+            massTextBlock.text = "Mass:";
+            massTextBlock.width = "50px";
+            massStackPanel.addControl(massTextBlock);
+
+            // Mass slider
+            var massSlider = new BABYLON.GUI.Slider();
+            massSlider.width = "100px";
+            massSlider.height = "20px";
+            massSlider.minimum = 1;
+            massSlider.maximum = 100000;
+            massSlider.value = 1000;
+            massStackPanel.addControl(massSlider);
+            grid.addControl(massStackPanel, 3, 0);
+
+            // Position GUI
+            const positionText = new BABYLON.GUI.TextBlock();
+            positionText.text = "Position";
+            positionText.width = "100%";
+            positionText.color = "black";
+            positionText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center horizontally
+            positionTextverticalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center vertically
+            grid.addControl(positionText, 4, 0);
+
+
+
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
