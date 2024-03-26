@@ -146,8 +146,150 @@
             positionTextverticalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center vertically
             grid.addControl(positionText, 4, 0);
 
+            // Create stack panel for the x position setting
+            var xStackPanel = new BABYLON.GUI.StackPanel();
+            xStackPanel.isVertical = false;
 
+            // x Text Block
+            var xTextBlock = new BABYLON.GUI.TextBlock();
+            xTextBlock.text = "X:";
+            xTextBlock.width = "50px";
+            xStackPanel.addControl(xTextBlock);
 
+             // X position slider
+            var xSlider = new BABYLON.GUI.Slider();
+            xSlider.width = "100px";
+            xSlider.height = "20px";
+            xSlider.minimum = 1;
+            xSlider.maximum = 100;
+            xSlider.value = 5;
+            xStackPanel.addControl(xSlider);
+            grid.addControl(xStackPanel, 5, 0);
+
+            // Create stack panel for the y position setting
+            var yStackPanel = new BABYLON.GUI.StackPanel();
+            yStackPanel.isVertical = false;
+
+            // y Text Block
+            var yTextBlock = new BABYLON.GUI.TextBlock();
+            yTextBlock.text = "Y:";
+            yTextBlock.width = "50px";
+            yStackPanel.addControl(yTextBlock);
+
+             // y position slider
+            var ySlider = new BABYLON.GUI.Slider();
+            ySlider.width = "100px";
+            ySlider.height = "20px";
+            ySlider.minimum = 1;
+            ySlider.maximum = 100;
+            ySlider.value = 5;
+            yStackPanel.addControl(ySlider);
+            grid.addControl(yStackPanel, 6, 0);
+
+            // Create stack panel for the z position setting
+            var zStackPanel = new BABYLON.GUI.StackPanel();
+            zStackPanel.isVertical = false;
+
+            // y Text Block
+            var zTextBlock = new BABYLON.GUI.TextBlock();
+            zTextBlock.text = "Z:";
+            zTextBlock.width = "50px";
+            zStackPanel.addControl(zTextBlock);
+
+             // y position slider
+            var zSlider = new BABYLON.GUI.Slider();
+            zSlider.width = "100px";
+            zSlider.height = "20px";
+            zSlider.minimum = 1;
+            zSlider.maximum = 100;
+            zSlider.value = 5;
+            zStackPanel.addControl(zSlider);
+            grid.addControl(zStackPanel, 7, 0);
+
+            var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
+            button.width = "100px";
+            button.height = "40px";
+            button.color = "black";
+            button.background = "white";
+            button.thickness = 0;
+            grid.addControl(button, 12, 0);
+
+            // Velocity GUI
+            const velocityText = new BABYLON.GUI.TextBlock();
+            velocityText.text = "Velocity";
+            velocityText.width = "100%";
+            velocityText.color = "black";
+            velocityText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center horizontally
+            positionTextverticalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center vertically
+            grid.addControl(velocityText, 8, 0);
+
+            // Create stack panel for the x velocity setting
+            var veloXStackPanel = new BABYLON.GUI.StackPanel();
+            veloXStackPanel.isVertical = false;
+
+            // x velocity Block
+            var veloXTextBlock = new BABYLON.GUI.TextBlock();
+            veloXTextBlock.text = "X:";
+            veloXTextBlock.width = "50px";
+            veloXStackPanel.addControl(veloXTextBlock);
+
+             // X velocity slider
+            var veloXSlider = new BABYLON.GUI.Slider();
+            veloXSlider.width = "100px";
+            veloXSlider.height = "20px";
+            veloXSlider.minimum = 1;
+            veloXSlider.maximum = 100;
+            veloXSlider.value = 5;
+            veloXStackPanel.addControl(veloXSlider);
+            grid.addControl(veloXStackPanel, 9, 0);
+
+            // Create stack panel for the y velocity setting
+            var veloYStackPanel = new BABYLON.GUI.StackPanel();
+            veloYStackPanel.isVertical = false;
+
+            // x velocity Block
+            var veloYTextBlock = new BABYLON.GUI.TextBlock();
+            veloYTextBlock.text = "Y:";
+            veloYTextBlock.width = "50px";
+            veloYStackPanel.addControl(veloYTextBlock);
+
+             // X velocity slider
+            var veloXSlider = new BABYLON.GUI.Slider();
+            veloXSlider.width = "100px";
+            veloXSlider.height = "20px";
+            veloXSlider.minimum = 1;
+            veloXSlider.maximum = 100;
+            veloXSlider.value = 5;
+            veloYStackPanel.addControl(veloXSlider);
+            grid.addControl(veloYStackPanel, 10, 0);
+
+            // Create stack panel for the z velocity setting
+            var veloZStackPanel = new BABYLON.GUI.StackPanel();
+            veloZStackPanel.isVertical = false;
+
+            // x velocity Block
+            var veloZTextBlock = new BABYLON.GUI.TextBlock();
+            veloZTextBlock.text = "X:";
+            veloZTextBlock.width = "50px";
+            veloZStackPanel.addControl(veloZTextBlock);
+
+             // X velocity slider
+            var veloZSlider = new BABYLON.GUI.Slider();
+            veloZSlider.width = "100px";
+            veloZSlider.height = "20px";
+            veloZSlider.minimum = 1;
+            veloZSlider.maximum = 100;
+            veloZSlider.value = 5;
+            veloZStackPanel.addControl(veloZSlider);
+            grid.addControl(veloZStackPanel, 11, 0);            
+
+            var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
+            button.width = "100px";
+            button.height = "40px";
+            button.color = "black";
+            button.background = "white";
+            button.thickness = 0;
+            grid.addControl(button, 12, 0);
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
