@@ -290,8 +290,17 @@
             grid.addControl(button, 12, 0);
 
             button.onPointerClickObservable.add(function(value) {
-                
-                
+                let testPosition = new BABYLON.Vector3(10, 0, 0); // moon
+                let testVelocity = new BABYLON.Vector3(0, 0, -1);
+                let testMass = 100;
+                let testRadius = 1;
+
+                const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
+                {diameter: testRadius}, scene);
+                testMesh.position = testPosition;
+
+                let tester = new AstroObject(testMass, testRadius, testVelocity, testPosition, testMesh);
+                testBodies2.push(tester);
             });
             // code will be something like this:
             // button.onPointerEnterObservable.add(() =>))
