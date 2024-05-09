@@ -203,13 +203,14 @@
             zStackPanel.addControl(zSlider);
             grid.addControl(zStackPanel, 7, 0);
 
-            var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
-            button.width = "100px";
-            button.height = "40px";
-            button.color = "black";
-            button.background = "white";
-            button.thickness = 0;
-            grid.addControl(button, 12, 0);
+            // Don't know why this was here. Delete by 5-10 if no errors occur.
+            // var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
+            // button.width = "100px";
+            // button.height = "40px";
+            // button.color = "black";
+            // button.background = "white";
+            // button.thickness = 0;
+            // grid.addControl(button, 12, 0);
 
             // Velocity GUI
             const velocityText = new BABYLON.GUI.TextBlock();
@@ -287,6 +288,15 @@
             button.background = "white";
             button.thickness = 0;
             grid.addControl(button, 12, 0);
+
+            button.onPointerClickObservable.add(function(value) {
+                
+                
+            });
+            // code will be something like this:
+            // button.onPointerEnterObservable.add(() =>))
+            // https://www.youtube.com/watch?v=4M4Tr51TgrM
+            
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function() {   
