@@ -131,6 +131,10 @@
             massSlider.minimum = 1;
             massSlider.maximum = 100000;
             massSlider.value = 1000;
+            massSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = massSlider.value.toFixed(1);
+                massTextBlock.text = `Mass: ${formattedValue}`;
+            });
             massStackPanel.addControl(massSlider);
             grid.addControl(massStackPanel, 3, 0);
 
@@ -160,7 +164,12 @@
             xSlider.minimum = 1;
             xSlider.maximum = 100;
             xSlider.value = 5;
+            xSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = xSlider.value.toFixed(1);
+                xTextBlock.text = `X: ${formattedValue}`;
+            });
             xStackPanel.addControl(xSlider);
+            
             grid.addControl(xStackPanel, 5, 0);
 
             // Create stack panel for the y position setting
@@ -180,6 +189,10 @@
             ySlider.minimum = 1;
             ySlider.maximum = 100;
             ySlider.value = 5;
+            ySlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = ySlider.value.toFixed(1);
+                yTextBlock.text = `Y: ${formattedValue}`;
+            });
             yStackPanel.addControl(ySlider);
             grid.addControl(yStackPanel, 6, 0);
 
@@ -187,30 +200,25 @@
             var zStackPanel = new BABYLON.GUI.StackPanel();
             zStackPanel.isVertical = false;
 
-            // y Text Block
+            // z Text Block
             var zTextBlock = new BABYLON.GUI.TextBlock();
             zTextBlock.text = "Z:";
             zTextBlock.width = "50px";
             zStackPanel.addControl(zTextBlock);
 
-             // y position slider
+             // z position slider
             var zSlider = new BABYLON.GUI.Slider();
             zSlider.width = "100px";
             zSlider.height = "20px";
             zSlider.minimum = 1;
             zSlider.maximum = 100;
             zSlider.value = 5;
+            zSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = zSlider.value.toFixed(1);
+                zTextBlock.text = `Z: ${formattedValue}`;
+            });
             zStackPanel.addControl(zSlider);
             grid.addControl(zStackPanel, 7, 0);
-
-            // Don't know why this was here. Delete by 5-10 if no errors occur.
-            // var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
-            // button.width = "100px";
-            // button.height = "40px";
-            // button.color = "black";
-            // button.background = "white";
-            // button.thickness = 0;
-            // grid.addControl(button, 12, 0);
 
             // Velocity GUI
             const velocityText = new BABYLON.GUI.TextBlock();
@@ -238,6 +246,10 @@
             veloXSlider.minimum = 1;
             veloXSlider.maximum = 100;
             veloXSlider.value = 5;
+            veloXSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = veloXSlider.value.toFixed(1);
+                veloXTextBlock.text = `X: ${formattedValue}`;
+            });
             veloXStackPanel.addControl(veloXSlider);
             grid.addControl(veloXStackPanel, 9, 0);
 
@@ -245,39 +257,47 @@
             var veloYStackPanel = new BABYLON.GUI.StackPanel();
             veloYStackPanel.isVertical = false;
 
-            // x velocity Block
+            // y velocity Block
             var veloYTextBlock = new BABYLON.GUI.TextBlock();
             veloYTextBlock.text = "Y:";
             veloYTextBlock.width = "50px";
             veloYStackPanel.addControl(veloYTextBlock);
 
-             // X velocity slider
-            var veloXSlider = new BABYLON.GUI.Slider();
-            veloXSlider.width = "100px";
-            veloXSlider.height = "20px";
-            veloXSlider.minimum = 1;
-            veloXSlider.maximum = 100;
-            veloXSlider.value = 5;
-            veloYStackPanel.addControl(veloXSlider);
+             // y velocity slider
+            var veloYSlider = new BABYLON.GUI.Slider();
+            veloYSlider.width = "100px";
+            veloYSlider.height = "20px";
+            veloYSlider.minimum = 1;
+            veloYSlider.maximum = 100;
+            veloYSlider.value = 5;
+            veloYSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = veloYSlider.value.toFixed(1);
+                veloYTextBlock.text = `Y: ${formattedValue}`;
+            });
+            veloYStackPanel.addControl(veloYSlider);
             grid.addControl(veloYStackPanel, 10, 0);
 
             // Create stack panel for the z velocity setting
             var veloZStackPanel = new BABYLON.GUI.StackPanel();
             veloZStackPanel.isVertical = false;
 
-            // x velocity Block
+            // z velocity Block
             var veloZTextBlock = new BABYLON.GUI.TextBlock();
-            veloZTextBlock.text = "X:";
+            veloZTextBlock.text = "Z:";
             veloZTextBlock.width = "50px";
             veloZStackPanel.addControl(veloZTextBlock);
 
-             // X velocity slider
+             // z velocity slider
             var veloZSlider = new BABYLON.GUI.Slider();
             veloZSlider.width = "100px";
             veloZSlider.height = "20px";
             veloZSlider.minimum = 1;
             veloZSlider.maximum = 100;
             veloZSlider.value = 5;
+            veloZSlider.onValueChangedObservable.add(function(value) {
+                let formattedValue = veloZSlider.value.toFixed(1);
+                veloZTextBlock.text = `Z: ${formattedValue}`;
+            });
             veloZStackPanel.addControl(veloZSlider);
             grid.addControl(veloZStackPanel, 11, 0);            
 
@@ -290,9 +310,9 @@
             grid.addControl(button, 12, 0);
 
             button.onPointerClickObservable.add(function(value) {
-                let testPosition = new BABYLON.Vector3(10, 0, 0); // moon
-                let testVelocity = new BABYLON.Vector3(0, 0, -1);
-                let testMass = 100;
+                let testPosition = new BABYLON.Vector3(xSlider.value, ySlider.value, zSlider.value); // moon
+                let testVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
+                let testMass = massSlider.value;
                 let testRadius = 1;
 
                 const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
