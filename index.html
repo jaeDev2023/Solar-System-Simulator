@@ -67,6 +67,9 @@
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 0.7;
+
+            // Add or remove the background color.
+            scene.clearColor = new BABYLON.Color4(0,0,0,0);
             
             // Add advance texture to add GUI elements, like text and sliders.
             var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
