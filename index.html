@@ -28,8 +28,8 @@
             const scene = new BABYLON.Scene(engine);
 
             // Variables
-            gravitationConstant = 0.0001;
-            globalTimeStep = .1;
+            let gravitationConstant = 0.0001;
+            let globalTimeStep = .1;
             let moonPosition = new BABYLON.Vector3(10, 0, 0); // moon
             let planetPosition = new BABYLON.Vector3(0, 0, 0); // planet
             let moonVelocity = new BABYLON.Vector3(0, 0, -1);
@@ -53,15 +53,13 @@
             let planet = new AstroObject(planetMass, planetRadius, planetVelocity, planetPosition, planetMesh);
             let testBodies2 = [moon, planet];
 
-            var camera = new BABYLON.FreeCamera(
-                "camera1",
-                new BABYLON.Vector3(0, 50, 0),
+            var camera = new BABYLON.UniversalCamera(
+                "fixedCamera",
+                new BABYLON.Vector3(0, 100, 0),
                 scene
-            );      
-            camera.inputs.addMouseWheel() ;
+            );
             camera.setTarget(new BABYLON.Vector3.Zero());
-            camera.attachControl(canvas, true);
-
+            camera.inputs.clear();
 
             // Creates a light, aiming 0,1,0 - to the sky
             const light = new BABYLON.HemisphericLight("light", 
@@ -102,7 +100,7 @@
 
             var timeStepSlider = new BABYLON.GUI.Slider();
             timeStepSlider.minimum = 0.01;
-            timeStepSlider.maximum = 0.25;
+            timeStepSlider.maximum = 0.15;
             timeStepSlider.width = "100%"
             timeStepSlider.height = "25%"
             timeStepSlider.value = globalTimeStep;
@@ -133,7 +131,7 @@
             var massSlider = new BABYLON.GUI.Slider();
             massSlider.width = "100px";
             massSlider.height = "20px";
-            massSlider.minimum = 1;
+            massSlider.minimum = 100;
             massSlider.maximum = 100000;
             massSlider.value = 1000;
             massSlider.onValueChangedObservable.add(function(value) {
@@ -248,8 +246,8 @@
             var veloXSlider = new BABYLON.GUI.Slider();
             veloXSlider.width = "100px";
             veloXSlider.height = "20px";
-            veloXSlider.minimum = -20;
-            veloXSlider.maximum = 20;
+            veloXSlider.minimum = -10;
+            veloXSlider.maximum = 10;
             veloXSlider.value = 0;
             veloXSlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = veloXSlider.value.toFixed(1);
@@ -272,8 +270,8 @@
             var veloYSlider = new BABYLON.GUI.Slider();
             veloYSlider.width = "100px";
             veloYSlider.height = "20px";
-            veloYSlider.minimum = -20;
-            veloYSlider.maximum = 20;
+            veloYSlider.minimum = -10;
+            veloYSlider.maximum = 10;
             veloYSlider.value = 0;
             veloYSlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = veloYSlider.value.toFixed(1);
@@ -296,8 +294,8 @@
             var veloZSlider = new BABYLON.GUI.Slider();
             veloZSlider.width = "100px";
             veloZSlider.height = "20px";
-            veloZSlider.minimum = -20;
-            veloZSlider.maximum = 20;
+            veloZSlider.minimum = -10;
+            veloZSlider.maximum = 10;
             veloZSlider.value = 0;
             veloZSlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = veloZSlider.value.toFixed(1);
