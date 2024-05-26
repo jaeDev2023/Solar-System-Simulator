@@ -40,6 +40,13 @@
             let planetRadius = 4
             const physicsController = new GravityCalculator();
 
+            // Red sphere mesh. Acts as a corsshair for placement of new objects
+            let crosshair = BABYLON.MeshBuilder.CreateSphere("crosshair", {diameter: 2}, scene);
+            let material = new BABYLON.StandardMaterial("material", scene);
+            material.alpha = 0.5;
+            material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+            crosshair.material = material;
+
             // Test mesh for camera follow testing
             const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
             {diameter: moonRadius}, scene);
@@ -170,6 +177,7 @@
             xSlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = xSlider.value.toFixed(1);
                 xTextBlock.text = `X: ${formattedValue}`;
+                crosshair.position.x = parseFloat(xSlider.value);
             });
             xStackPanel.addControl(xSlider);
             
@@ -195,6 +203,7 @@
             ySlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = ySlider.value.toFixed(1);
                 yTextBlock.text = `Y: ${formattedValue}`;
+                crosshair.position.y = parseFloat(ySlider.value);
             });
             yStackPanel.addControl(ySlider);
             grid.addControl(yStackPanel, 6, 0);
@@ -219,6 +228,7 @@
             zSlider.onValueChangedObservable.add(function(value) {
                 let formattedValue = zSlider.value.toFixed(1);
                 zTextBlock.text = `Z: ${formattedValue}`;
+                crosshair.position.z = parseFloat(zSlider.value);
             });
             zStackPanel.addControl(zSlider);
             grid.addControl(zStackPanel, 7, 0);
