@@ -1,6 +1,6 @@
 # Solar-System-Simulator
-The Soar System Simulator gives you the opportunity to create your own object with mass and observe how those objects
-interace using the force of gravity.
+The Solar System Simulator gives you the opportunity to create your own objects with mass and observe how those objects
+interact using the force of gravity.
 
 ## Installation Instructions
 Simply download the code files and unzip into the same directory. Run the HTML file in a web browser of your choice.
@@ -9,9 +9,8 @@ Simply download the code files and unzip into the same directory. Run the HTML f
 
 ## Features
 You can:
-*Create orbits
-*Collide objects
-*
+* Create orbits
+* Collide objects
 
 ## License
 Enter MIT Licence
