@@ -15,12 +15,17 @@ class AstroObject {
     {
         allBodies.forEach(otherBody => {
             if (otherBody !== this) {
-            const direction = otherBody.position.subtract(this.position);
-            const distanceSquared = direction.lengthSquared();
-            const forceDirection = direction.normalize();
-            const forceMagnitude = forceDirection.scale(gravitationalConstant * this.mass * otherBody.mass / distanceSquared);
-            const acceleration = forceMagnitude.scale(1 / this.mass);
-            this.velocity = this.velocity.add(acceleration.scale(timeStep));}
+                const direction = otherBody.position.subtract(this.position);
+                
+                const threshold = this.radius + otherBody.radius;
+                const distanceSquared = direction.lengthSquared();
+                if(distanceSquared < threshold) {
+                    console.log("Collision detected. Delete the colliding objects");
+                }                
+                const forceDirection = direction.normalize();
+                const forceMagnitude = forceDirection.scale(gravitationalConstant * this.mass * otherBody.mass / distanceSquared);
+                const acceleration = forceMagnitude.scale(1 / this.mass);
+                this.velocity = this.velocity.add(acceleration.scale(timeStep));}
         });
     }
 
