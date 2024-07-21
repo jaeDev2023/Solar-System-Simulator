@@ -34,4 +34,6 @@ class AstroObject {
         this.position = this.position.add(this.velocity.scale(timeStep));
         this.meshHolder.position = this.position;
     }
+
+    
 }
