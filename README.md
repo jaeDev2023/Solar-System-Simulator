@@ -6,15 +6,12 @@ interact using the force of gravity.
 Simply download the code files and unzip into the same directory. Run the HTML file in a web browser of your choice.
 
 ## Usage
+Create and destroy to your heart's content! If you enjoy learning and want to observe how mass, velocity, distance, and other variables affect orbits, then this is your app.
 
 ## Features
 You can:
-* Create orbits
+* Create objects
+* Watch Orbits
+* Create systems of particles and objects.
 * Collide objects
-
-## License
-Enter MIT Licence
-
 ## Acknowledgements
-
-End of ReadMe draft.
