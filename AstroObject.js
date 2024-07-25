@@ -30,17 +30,35 @@ class AstroObject {
         this.meshHolder.position = this.position;
     }
 
-    DetectCollision(allBodies) {
+    DetectCollision(allBodies, otherBody) {
         allBodies.forEach(otherBody => {
-            if(otherBody !== this) {
+            if (otherBody !== this) {
                 const direction = otherBody.position.subtract(this.position);
-                
                 const threshold = this.radius + otherBody.radius;
                 const distanceSquared = direction.lengthSquared();
                 if(distanceSquared < threshold*threshold) {
                     console.log("collision detected");
-                } 
-            }
+                    if(this.meshHolder) {
+                        this.meshHolder.dispose();
+                    }
+
+                    if(otherBody.meshHolder) {
+                        otherBody.meshHolder.dispose();
+                    }
+
+                    const thisIndex = allBodies.indexOf(this);
+                    const otherIndex = allBodies.indexOf(otherBody);
+
+                    if(thisIndex > -1) {
+                        allBodies.splice(thisIndex, 1);
+                    }
+
+                    if (otherIndex > -1) {
+                        allBodies.splice(otherIndex, 1);
+                    }
+                }
+            }     
         });
+
     }
 }
