@@ -6,7 +6,6 @@ class AstroObject {
         this.initialVelocity = initialVelocity;
         this.position = initialPosition;
         this.meshHolder = meshHolder
-        this.mesh = meshHolder;
         this.velocity = initialVelocity;
         
     }
@@ -16,16 +15,12 @@ class AstroObject {
         allBodies.forEach(otherBody => {
             if (otherBody !== this) {
                 const direction = otherBody.position.subtract(this.position);
-                
-                const threshold = this.radius + otherBody.radius;
                 const distanceSquared = direction.lengthSquared();
-                if(distanceSquared < threshold) {
-                    console.log("Collision detected. Delete the colliding objects");
-                }                
                 const forceDirection = direction.normalize();
                 const forceMagnitude = forceDirection.scale(gravitationalConstant * this.mass * otherBody.mass / distanceSquared);
                 const acceleration = forceMagnitude.scale(1 / this.mass);
-                this.velocity = this.velocity.add(acceleration.scale(timeStep));}
+                this.velocity = this.velocity.add(acceleration.scale(timeStep));   
+            }     
         });
     }
 
@@ -33,5 +28,19 @@ class AstroObject {
     {
         this.position = this.position.add(this.velocity.scale(timeStep));
         this.meshHolder.position = this.position;
+    }
+
+    DetectCollision(allBodies) {
+        allBodies.forEach(otherBody => {
+            if(otherBody !== this) {
+                const direction = otherBody.position.subtract(this.position);
+                
+                const threshold = this.radius + otherBody.radius;
+                const distanceSquared = direction.lengthSquared();
+                if(distanceSquared < threshold*threshold) {
+                    console.log("collision detected");
+                } 
+            }
+        });
     }
 }
