@@ -31,12 +31,12 @@
             let globalTimeStep = .1;
             let moonPosition = new BABYLON.Vector3(10, 0, 0); // moon
             let planetPosition = new BABYLON.Vector3(0, 0, 0); // planet
-            let moonVelocity = new BABYLON.Vector3(0, 0, 0);
+            let moonVelocity = new BABYLON.Vector3(0, -1, 0);
             let planetVelocity = new BABYLON.Vector3(0,0, 0);
             let moonMass = 1;
             let planetMass = 100000;
-            let moonRadius = 2;
-            let planetRadius = 4
+            let moonDiameter = 2;
+            let planetDiameter = 4
             const physicsController = new GravityCalculator();
 
             // Red sphere mesh. Acts as a corsshair for placement of new objects
@@ -48,15 +48,15 @@
 
             // Test mesh for camera follow testing
             const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
-            {diameter: moonRadius}, scene);
+            {diameter: moonDiameter}, scene);
             moonMesh.position = moonPosition;
 
-            const planetMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
-            {diameter: planetRadius}, scene);
+            const planetMesh = BABYLON.MeshBuilder.CreateSphere("planetMesh",
+            {diameter: planetDiameter}, scene);
             planetMesh.position = planetPosition;
 
-            let moon = new AstroObject(moonMass, moonRadius, moonVelocity, moonPosition, moonMesh);
-            let planet = new AstroObject(planetMass, planetRadius, planetVelocity, planetPosition, planetMesh);
+            let moon = new AstroObject(moonMass, moonDiameter, moonVelocity, moonPosition, moonMesh);
+            let planet = new AstroObject(planetMass, planetDiameter, planetVelocity, planetPosition, planetMesh);
             let testBodies2 = [moon, planet];
 
             let camera = new BABYLON.UniversalCamera(

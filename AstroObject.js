@@ -1,12 +1,11 @@
 class AstroObject {
-    constructor(mass, radius, initialVelocity, initialPosition, meshHolder)
+    constructor(mass, diameter, initialVelocity, initialPosition, meshHolder)
     {
         this.mass = mass;
-        this.radius = radius;
+        this.diameter = diameter;
         this.initialVelocity = initialVelocity;
         this.position = initialPosition;
         this.meshHolder = meshHolder
-        this.mesh = meshHolder;
         this.velocity = initialVelocity;
         
     }
@@ -16,16 +15,12 @@ class AstroObject {
         allBodies.forEach(otherBody => {
             if (otherBody !== this) {
                 const direction = otherBody.position.subtract(this.position);
-                
-                const threshold = this.radius + otherBody.radius;
                 const distanceSquared = direction.lengthSquared();
-                if(distanceSquared < threshold) {
-                    console.log("Collision detected. Delete the colliding objects");
-                }                
                 const forceDirection = direction.normalize();
                 const forceMagnitude = forceDirection.scale(gravitationalConstant * this.mass * otherBody.mass / distanceSquared);
                 const acceleration = forceMagnitude.scale(1 / this.mass);
-                this.velocity = this.velocity.add(acceleration.scale(timeStep));}
+                this.velocity = this.velocity.add(acceleration.scale(timeStep));   
+            }     
         });
     }
 
@@ -35,5 +30,42 @@ class AstroObject {
         this.meshHolder.position = this.position;
     }
 
-    
+    DetectCollision(allBodies, otherBody) {
+        allBodies.forEach(otherBody => {
+            if (otherBody !== this) {
+                const direction = otherBody.position.subtract(this.position);
+
+                // Threshold is the distance between the centers of two objects.
+                // Because it measures from center-to-center, we divide the diameter by 2
+                const threshold = (this.diameter + otherBody.diameter)/2;
+                const distanceSquared = direction.lengthSquared();
+                if(distanceSquared < threshold*threshold) {
+                    console.log("collision detected");
+                    console.log(`this dia: ${this.diameter}`);
+                    console.log(`other dia: ${otherBody.diameter}`);
+                    console.log(`sum of diameters: ${this.diameter + otherBody.diameter}`);
+                    console.log(`Threshold: ${threshold}. distanceSquared: ${distanceSquared}`)
+                    if(this.meshHolder) {
+                        this.meshHolder.dispose();
+                    }
+
+                    if(otherBody.meshHolder) {
+                        otherBody.meshHolder.dispose();
+                    }
+
+                    const thisIndex = allBodies.indexOf(this);
+                    const otherIndex = allBodies.indexOf(otherBody);
+
+                    if(thisIndex > -1) {
+                        allBodies.splice(thisIndex, 1);
+                    }
+
+                    if (otherIndex > -1) {
+                        allBodies.splice(otherIndex, 1);
+                    }
+                }
+            }     
+        });
+
+    }
 }

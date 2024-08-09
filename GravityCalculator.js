@@ -6,6 +6,11 @@ class GravityCalculator {
         astroBodies.forEach(body => {
             body.UpdateVelocity(astroBodies, timestep, gravitaionalConstant);
             body.UpdatePosition(timestep);
+            body.DetectCollision(astroBodies);
+
+
+            //body.DetectCollision(astroBodies);
+
         })
     }
 }
