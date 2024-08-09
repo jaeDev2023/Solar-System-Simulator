@@ -1,8 +1,8 @@
 class AstroObject {
-    constructor(mass, radius, initialVelocity, initialPosition, meshHolder)
+    constructor(mass, diameter, initialVelocity, initialPosition, meshHolder)
     {
         this.mass = mass;
-        this.radius = radius;
+        this.diameter = diameter;
         this.initialVelocity = initialVelocity;
         this.position = initialPosition;
         this.meshHolder = meshHolder
@@ -34,10 +34,17 @@ class AstroObject {
         allBodies.forEach(otherBody => {
             if (otherBody !== this) {
                 const direction = otherBody.position.subtract(this.position);
-                const threshold = this.radius + otherBody.radius;
+
+                // Threshold is the distance between the centers of two objects.
+                // Because it measures from center-to-center, we divide the diameter by 2
+                const threshold = (this.diameter + otherBody.diameter)/2;
                 const distanceSquared = direction.lengthSquared();
                 if(distanceSquared < threshold*threshold) {
                     console.log("collision detected");
+                    console.log(`this dia: ${this.diameter}`);
+                    console.log(`other dia: ${otherBody.diameter}`);
+                    console.log(`sum of diameters: ${this.diameter + otherBody.diameter}`);
+                    console.log(`Threshold: ${threshold}. distanceSquared: ${distanceSquared}`)
                     if(this.meshHolder) {
                         this.meshHolder.dispose();
                     }
