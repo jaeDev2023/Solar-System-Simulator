@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Solar System Simulator: S3</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="https://cdn.babylonjs.com/babylon.js"></script>
-        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
-        <script src="AstroObject.js"></script>
-        <script src="GravityCalculator.js"></script>
-    </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Simulator: S3</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="AstroObject.js"></script>
+    <script src="GravityCalculator.js"></script>
+</head>
 
-   <body>
+<body>
     <div class="container">
         <h1 id="header__main">Solar System Simulator</h1>
         <canvas id="renderCanvas"></canvas>
     </div>
 
 
-	<script>
+    <script>
         const canvas = document.getElementById("renderCanvas"); // Get the canvas element
         const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
         const createScene = function () {
@@ -32,15 +32,22 @@
             let moonPosition = new BABYLON.Vector3(10, 0, 0); // moon
             let planetPosition = new BABYLON.Vector3(0, 0, 0); // planet
             let moonVelocity = new BABYLON.Vector3(0, -1, 0);
-            let planetVelocity = new BABYLON.Vector3(0,0, 0);
+            let planetVelocity = new BABYLON.Vector3(0, 0, 0);
             let moonMass = 1;
             let planetMass = 100000;
             let moonDiameter = 2;
             let planetDiameter = 4
             const physicsController = new GravityCalculator();
+            // Variables to track movement
+            let moveLeft = false;
+            let moveRight = false;
+            let moveUp = false;
+            let moveDown = false;
+            let moveForward = false;
+            let moveBackward = false;
 
             // Red sphere mesh. Acts as a corsshair for placement of new objects
-            let crosshair = BABYLON.MeshBuilder.CreateSphere("crosshair", {diameter: 2}, scene);
+            let crosshair = BABYLON.MeshBuilder.CreateSphere("crosshair", { diameter: 2 }, scene);
             let material = new BABYLON.StandardMaterial("material", scene);
             material.alpha = 0.5;
             material.diffuseColor = new BABYLON.Color3(1, 0, 0);
@@ -48,11 +55,11 @@
 
             // Test mesh for camera follow testing
             const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
-            {diameter: moonDiameter}, scene);
+                { diameter: moonDiameter }, scene);
             moonMesh.position = moonPosition;
 
             const planetMesh = BABYLON.MeshBuilder.CreateSphere("planetMesh",
-            {diameter: planetDiameter}, scene);
+                { diameter: planetDiameter }, scene);
             planetMesh.position = planetPosition;
 
             let moon = new AstroObject(moonMass, moonDiameter, moonVelocity, moonPosition, moonMesh);
@@ -68,26 +75,25 @@
             camera.inputs.clear();
 
             // Creates a light, aiming 0,1,0 - to the sky
-            const light = new BABYLON.HemisphericLight("light", 
+            const light = new BABYLON.HemisphericLight("light",
                 new BABYLON.Vector3(0, 1, 0), scene);
 
             // Dim the light a small amount - 0 to 1
             light.intensity = 1;
 
             // Add or remove the background color.
-            scene.clearColor = new BABYLON.Color4(0,0,0,0);
-            
+            scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
+
             // Add advance texture to add GUI elements, like text and sliders.
             let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-            
+
             // Grid for GUI positioning on the canvas
             let grid = new BABYLON.GUI.Grid();
             advancedTexture.addControl(grid);
             grid.addColumnDefinition(1);
 
             // Add Rows for the control
-            for(let i = 0; i < 14; i++)
-            {
+            for (let i = 0; i < 14; i++) {
                 grid.addRowDefinition(1);
             }
             grid.width = "25%";
@@ -136,7 +142,7 @@
             massSlider.minimum = 100;
             massSlider.maximum = 100000;
             massSlider.value = 1000;
-            massSlider.onValueChangedObservable.add(function(value) {
+            massSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = massSlider.value.toFixed(1);
                 massTextBlock.text = `Mass: ${formattedValue}`;
             });
@@ -161,20 +167,20 @@
             xTextBlock.width = "75px";
             xStackPanel.addControl(xTextBlock);
 
-             // X position slider
+            // X position slider
             let xSlider = new BABYLON.GUI.Slider();
             xSlider.width = "100px";
             xSlider.height = "20px";
             xSlider.minimum = -50;
             xSlider.maximum = 50;
             xSlider.value = 0;
-            xSlider.onValueChangedObservable.add(function(value) {
+            xSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = xSlider.value.toFixed(1);
                 xTextBlock.text = `X: ${formattedValue}`;
                 crosshair.position.x = parseFloat(xSlider.value);
             });
             xStackPanel.addControl(xSlider);
-            
+
             grid.addControl(xStackPanel, 6, 0);
 
             // Create stack panel for the y position setting
@@ -187,14 +193,14 @@
             yTextBlock.width = "75px";
             yStackPanel.addControl(yTextBlock);
 
-             // y position slider
+            // y position slider
             let ySlider = new BABYLON.GUI.Slider();
             ySlider.width = "100px";
             ySlider.height = "20px";
             ySlider.minimum = -50;
             ySlider.maximum = 50;
             ySlider.value = 0;
-            ySlider.onValueChangedObservable.add(function(value) {
+            ySlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = ySlider.value.toFixed(1);
                 yTextBlock.text = `Y: ${formattedValue}`;
                 crosshair.position.y = parseFloat(ySlider.value);
@@ -212,14 +218,14 @@
             zTextBlock.width = "75px";
             zStackPanel.addControl(zTextBlock);
 
-             // z position slider
+            // z position slider
             let zSlider = new BABYLON.GUI.Slider();
             zSlider.width = "100px";
             zSlider.height = "20px";
             zSlider.minimum = -50;
             zSlider.maximum = 50;
             zSlider.value = 0;
-            zSlider.onValueChangedObservable.add(function(value) {
+            zSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = zSlider.value.toFixed(1);
                 zTextBlock.text = `Z: ${formattedValue}`;
                 crosshair.position.z = parseFloat(zSlider.value);
@@ -246,14 +252,14 @@
             veloXTextBlock.width = "75px";
             veloXStackPanel.addControl(veloXTextBlock);
 
-             // X velocity slider
+            // X velocity slider
             let veloXSlider = new BABYLON.GUI.Slider();
             veloXSlider.width = "100px";
             veloXSlider.height = "20px";
             veloXSlider.minimum = -10;
             veloXSlider.maximum = 10;
             veloXSlider.value = 0;
-            veloXSlider.onValueChangedObservable.add(function(value) {
+            veloXSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloXSlider.value.toFixed(1);
                 veloXTextBlock.text = `X: ${formattedValue}`;
             });
@@ -270,14 +276,14 @@
             veloYTextBlock.width = "75px";
             veloYStackPanel.addControl(veloYTextBlock);
 
-             // y velocity slider
+            // y velocity slider
             let veloYSlider = new BABYLON.GUI.Slider();
             veloYSlider.width = "100px";
             veloYSlider.height = "20px";
             veloYSlider.minimum = -10;
             veloYSlider.maximum = 10;
             veloYSlider.value = 0;
-            veloYSlider.onValueChangedObservable.add(function(value) {
+            veloYSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloYSlider.value.toFixed(1);
                 veloYTextBlock.text = `Y: ${formattedValue}`;
             });
@@ -294,19 +300,19 @@
             veloZTextBlock.width = "75px";
             veloZStackPanel.addControl(veloZTextBlock);
 
-             // z velocity slider
+            // z velocity slider
             let veloZSlider = new BABYLON.GUI.Slider();
             veloZSlider.width = "100px";
             veloZSlider.height = "20px";
             veloZSlider.minimum = -10;
             veloZSlider.maximum = 10;
             veloZSlider.value = 0;
-            veloZSlider.onValueChangedObservable.add(function(value) {
+            veloZSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloZSlider.value.toFixed(1);
                 veloZTextBlock.text = `Z: ${formattedValue}`;
             });
             veloZStackPanel.addControl(veloZSlider);
-            grid.addControl(veloZStackPanel, 12, 0);            
+            grid.addControl(veloZStackPanel, 12, 0);
 
             let button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
             button.width = "100px";
@@ -316,36 +322,122 @@
             button.thickness = 0;
             grid.addControl(button, 13, 0);
 
-            button.onPointerClickObservable.add(function(value) {
+            button.onPointerClickObservable.add(function (value) {
                 let testPosition = new BABYLON.Vector3(xSlider.value, ySlider.value, zSlider.value); // moon
                 let testVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
                 let testMass = massSlider.value;
                 let testRadius = 1;
 
                 const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
-                {diameter: testRadius}, scene);
+                    { diameter: testRadius }, scene);
                 testMesh.position = testPosition;
 
                 let tester = new AstroObject(testMass, testRadius, testVelocity, testPosition, testMesh);
                 testBodies2.push(tester);
-            });            
+            });
+
+            function addSphereAtClick(x, y) {
+                const pickRay = scene.createPickingRay(x, y, BABYLON.Matrix.Identity(), camera);
+
+                const z = parseFloat(zSlider.value); // Get Z value from the slider
+
+                const position = pickRay.origin.add(pickRay.direction.scale((z - pickRay.origin.z) / pickRay.direction.z));
+
+                const testRadius = 1;
+                const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
+                    { diameter: testRadius * 2 }, scene);
+
+                console.log(`addedPosition coords: x:${position.x} y: ${position.y} z: ${position.z}`);
+
+                let testVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
+                let testMass = massSlider.value;
+
+
+
+                testMesh.position = position;
+
+                let tester = new AstroObject(testMass, testRadius, testVelocity, position, testMesh);
+                testBodies2.push(tester);
+            }
+
+            // Update sphere position based on keys pressed
+            function updateSpherePosition() {
+                const speed = 0.2; // Adjust this value for faster/slower movement
+
+                if (moveLeft) console.log("left");   // A key
+                if (moveRight) console.log("right");  // D key
+                if (moveUp) console.log("up");     // W key
+                if (moveDown) console.log("down");   // S key
+                if (moveForward) console.log("U"); // U key
+                if (moveBackward) console.log("J"); // J key
+            }
+
+            // Keydown event listener
+            window.addEventListener("keydown", function (event) {
+                switch (event.key) {
+                    case "a": case "A":
+                        moveLeft = true;
+                        break;
+                    case "d": case "D":
+                        moveRight = true;
+                        break;
+                    case "w": case "W":
+                        moveUp = true;
+                        break;
+                    case "s": case "S":
+                        moveDown = true;
+                        break;
+                    case "u": case "U":
+                        moveForward = true;
+                        break;
+                    case "j": case "J":
+                        moveBackward = true;
+                        break;
+                }
+            });
+
+            // Keyup event listener to stop movement when the key is released
+            window.addEventListener("keyup", function (event) {
+                switch (event.key) {
+                    case "a": case "A":
+                        moveLeft = false;
+                        break;
+                    case "d": case "D":
+                        moveRight = false;
+                        break;
+                    case "w": case "W":
+                        moveUp = false;
+                        break;
+                    case "s": case "S":
+                        moveDown = false;
+                        break;
+                    case "u": case "U":
+                        moveForward = false;
+                        break;
+                    case "j": case "J":
+                        moveBackward = false;
+                        break;
+                }
+            });
 
             // These functions run during the program's runtime.
-            scene.registerAfterRender(function() {   
+            scene.registerAfterRender(function () {
                 physicsController.UpdateObjectPositions(testBodies2, globalTimeStep, gravitationConstant);
+                updateSpherePosition();
             })
-            
+
             return scene;
         };
         const scene = createScene(); //Call the createScene function
         // Register a render loop to repeatedly render the scene
         engine.runRenderLoop(function () {
-                scene.render();
+            scene.render();
         });
         // Watch for browser/canvas resize events
         window.addEventListener("resize", function () {
-                engine.resize();
+            engine.resize();
         });
-	</script>
-   </body>
+    </script>
+</body>
+
 </html>
