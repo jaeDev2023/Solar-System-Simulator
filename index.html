@@ -362,14 +362,39 @@
 
             // Update sphere position based on keys pressed
             function updateSpherePosition() {
-                const speed = 0.2; // Adjust this value for faster/slower movement
+                const speed = 0.4; // Adjust this value for faster/slower movement
 
-                if (moveLeft) console.log("left");   // A key
-                if (moveRight) console.log("right");  // D key
-                if (moveUp) console.log("up");     // W key
-                if (moveDown) console.log("down");   // S key
-                if (moveForward) console.log("U"); // U key
-                if (moveBackward) console.log("J"); // J key
+                if (moveLeft){
+                    // Runs when the a/A key is pressed. Moves crosshair to the left.
+                    console.log("left");
+                    crosshair.position.x -= speed * 1;
+                }
+                if (moveRight){
+                    // Runs when the d/d key is pressed. Moves crosshair to the right.
+                     console.log("right");
+                     crosshair.position.x += speed * 1;
+                    
+                     }
+                if (moveUp){
+                    // Runs when the w/W key is pressed. Moves crosshair up
+                     console.log("up");
+                     crosshair.position.y += speed * 1;
+                     }
+                if (moveDown){
+                    // Runs when the s/S key is pressed. Moves crosshair down.
+                     console.log("down");
+                     crosshair.position.y -= speed * 1;
+                     }
+                if (moveForward){
+                    // Runs when the q/Q key is pressed. Moves crosshair to the away from the user.
+                     console.log("q");
+                     crosshair.position.z -= speed * 1;
+                     }
+                if (moveBackward){
+                    // Runs when the e/E key is pressed. Moves crosshair inward to the user.
+                     console.log("e");
+                     crosshair.position.z += speed * 1;
+                     }
             }
 
             // Keydown event listener
@@ -387,10 +412,10 @@
                     case "s": case "S":
                         moveDown = true;
                         break;
-                    case "u": case "U":
+                    case "q": case "Q":
                         moveForward = true;
                         break;
-                    case "j": case "J":
+                    case "e": case "E":
                         moveBackward = true;
                         break;
                 }
@@ -411,10 +436,10 @@
                     case "s": case "S":
                         moveDown = false;
                         break;
-                    case "u": case "U":
+                    case "q": case "Q":
                         moveForward = false;
                         break;
-                    case "j": case "J":
+                    case "e": case "E":
                         moveBackward = false;
                         break;
                 }
