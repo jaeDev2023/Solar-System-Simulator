@@ -34,7 +34,7 @@ class AstroObject {
         allBodies.forEach(otherBody => {
             if (otherBody !== this) {
                 const direction = otherBody.position.subtract(this.position);
-                const buffer = 25;
+                const buffer = 100;
 
                 // Threshold is the distance between the centers of two objects.
                 // Because it measures from center-to-center, we divide the diameter by 2

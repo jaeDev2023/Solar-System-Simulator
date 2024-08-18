@@ -336,65 +336,48 @@
                 testBodies2.push(tester);
             });
 
-            function addSphereAtClick(x, y) {
-                const pickRay = scene.createPickingRay(x, y, BABYLON.Matrix.Identity(), camera);
-
-                const z = parseFloat(zSlider.value); // Get Z value from the slider
-
-                const position = pickRay.origin.add(pickRay.direction.scale((z - pickRay.origin.z) / pickRay.direction.z));
-
-                const testRadius = 1;
-                const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
-                    { diameter: testRadius * 2 }, scene);
-
-                console.log(`addedPosition coords: x:${position.x} y: ${position.y} z: ${position.z}`);
-
-                let testVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
-                let testMass = massSlider.value;
-
-
-
-                testMesh.position = position;
-
-                let tester = new AstroObject(testMass, testRadius, testVelocity, position, testMesh);
-                testBodies2.push(tester);
-            }
-
             // Update sphere position based on keys pressed
             function updateSpherePosition() {
                 const speed = 0.4; // Adjust this value for faster/slower movement
 
-                if (moveLeft){
+                if (moveLeft) {
                     // Runs when the a/A key is pressed. Moves crosshair to the left.
-                    console.log("left");
                     crosshair.position.x -= speed * 1;
                 }
-                if (moveRight){
+                if (moveRight) {
                     // Runs when the d/d key is pressed. Moves crosshair to the right.
-                     console.log("right");
-                     crosshair.position.x += speed * 1;
-                    
-                     }
-                if (moveUp){
+                    crosshair.position.x += speed * 1;
+
+                }
+                if (moveUp) {
                     // Runs when the w/W key is pressed. Moves crosshair up
-                     console.log("up");
-                     crosshair.position.y += speed * 1;
-                     }
-                if (moveDown){
+                    crosshair.position.y += speed * 1;
+                }
+                if (moveDown) {
                     // Runs when the s/S key is pressed. Moves crosshair down.
-                     console.log("down");
-                     crosshair.position.y -= speed * 1;
-                     }
-                if (moveForward){
+                    crosshair.position.y -= speed * 1;
+                }
+                if (moveForward) {
                     // Runs when the q/Q key is pressed. Moves crosshair to the away from the user.
-                     console.log("q");
-                     crosshair.position.z -= speed * 1;
-                     }
-                if (moveBackward){
+                    crosshair.position.z -= speed * 1;
+                }
+                if (moveBackward) {
                     // Runs when the e/E key is pressed. Moves crosshair inward to the user.
-                     console.log("e");
-                     crosshair.position.z += speed * 1;
-                     }
+                    crosshair.position.z += speed * 1;
+                }
+
+                // Update the values for the sliders on the GUI
+                let formattedX = crosshair.position.x.toFixed(1);
+                let formattedY = crosshair.position.y.toFixed(1);
+                let formattedZ = crosshair.position.z.toFixed(1);
+
+
+                xTextBlock.text = `X: ${formattedX}`;
+                xSlider.value = formattedX;
+                yTextBlock.text = `Y: ${formattedY}`;
+                ySlider.value = formattedY;
+                zTextBlock.text = `Z: ${formattedZ}`;
+                zSlider.value = formattedZ;
             }
 
             // Keydown event listener
