@@ -197,8 +197,8 @@
             let ySlider = new BABYLON.GUI.Slider();
             ySlider.width = "100px";
             ySlider.height = "20px";
-            ySlider.minimum = -50;
-            ySlider.maximum = 50;
+            ySlider.minimum = -40;
+            ySlider.maximum = 40;
             ySlider.value = 0;
             ySlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = ySlider.value.toFixed(1);
@@ -342,28 +342,40 @@
 
                 if (moveLeft) {
                     // Runs when the a/A key is pressed. Moves crosshair to the left.
-                    crosshair.position.x -= speed * 1;
+                    if (crosshair.position.x > xSlider.minimum) {
+                        crosshair.position.x -= speed * 1;
+                    }
                 }
                 if (moveRight) {
                     // Runs when the d/d key is pressed. Moves crosshair to the right.
-                    crosshair.position.x += speed * 1;
+                    if (crosshair.position.x < xSlider.maximum) {
+                        crosshair.position.x += speed * 1;
+                    }
 
                 }
                 if (moveUp) {
                     // Runs when the w/W key is pressed. Moves crosshair up
-                    crosshair.position.y += speed * 1;
+                    if (crosshair.position.y < ySlider.maximum) {
+                        crosshair.position.y += speed * 1;
+                    }
                 }
                 if (moveDown) {
                     // Runs when the s/S key is pressed. Moves crosshair down.
-                    crosshair.position.y -= speed * 1;
+                    if (crosshair.position.y > ySlider.minimum) {
+                        crosshair.position.y -= speed * 1;
+                    }
                 }
                 if (moveForward) {
-                    // Runs when the q/Q key is pressed. Moves crosshair to the away from the user.
-                    crosshair.position.z -= speed * 1;
+                    // Runs when the q/Q key is pressed. Moves crosshair away from the user.
+                    if (crosshair.position.z < zSlider.maximum) {
+                        crosshair.position.z += speed * 1;
+                    }
                 }
                 if (moveBackward) {
                     // Runs when the e/E key is pressed. Moves crosshair inward to the user.
-                    crosshair.position.z += speed * 1;
+                    if (crosshair.position.z > zSlider.minimum) {
+                        crosshair.position.z -= speed * 1;
+                    }
                 }
 
                 // Update the values for the sliders on the GUI
