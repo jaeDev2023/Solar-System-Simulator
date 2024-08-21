@@ -46,14 +46,14 @@
             let moveForward = false;
             let moveBackward = false;
 
-            // Red sphere mesh. Acts as a corsshair for placement of new objects
+            // Red sphere mesh. This Acts as a visual indicator for placement of new objects
             let crosshair = BABYLON.MeshBuilder.CreateSphere("crosshair", { diameter: 2 }, scene);
             let material = new BABYLON.StandardMaterial("material", scene);
             material.alpha = 0.5;
             material.diffuseColor = new BABYLON.Color3(1, 0, 0);
             crosshair.material = material;
 
-            // Test mesh for camera follow testing
+            // Test mesh and AstroObjects for the initial system.
             const moonMesh = BABYLON.MeshBuilder.CreateSphere("moonMesh",
                 { diameter: moonDiameter }, scene);
             moonMesh.position = moonPosition;
@@ -64,13 +64,15 @@
 
             let moon = new AstroObject(moonMass, moonDiameter, moonVelocity, moonPosition, moonMesh);
             let planet = new AstroObject(planetMass, planetDiameter, planetVelocity, planetPosition, planetMesh);
-            let testBodies2 = [moon, planet];
+            let bodiesArray = [moon, planet];
 
+            // Create the camera and position it.
             let camera = new BABYLON.UniversalCamera(
                 "fixedCamera",
                 new BABYLON.Vector3(0, 0, -100),
                 scene
             );
+            // Focus the camera on the origin, where the initial system is setup.
             camera.setTarget(new BABYLON.Vector3.Zero());
             camera.inputs.clear();
 
@@ -84,7 +86,7 @@
             // Add or remove the background color.
             scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
 
-            // Add advance texture to add GUI elements, like text and sliders.
+            // Add advance texture to add GUI elements like textboxes and sliders.
             let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
             // Grid for GUI positioning on the canvas
@@ -125,13 +127,13 @@
             newObjectText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER; // Center horizontally
             newObjectText.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; // Center vertically
             grid.addControl(newObjectText, 2, 0);
-            timeStepSlider.onValueChangedObservable.add(function (value) {
+            timeStepSlider.onValueChangedObservable.add((value)=> {
                 globalTimeStep = value;
             });
 
             // Mass Text Block
             let massTextBlock = new BABYLON.GUI.TextBlock();
-            massTextBlock.text = "Mass:";
+            massTextBlock.text = "Mass: 50000.0";
             massTextBlock.width = "100%";
             grid.addControl(massTextBlock, 3, 0);
 
@@ -141,9 +143,9 @@
             massSlider.height = "25%";
             massSlider.minimum = 100;
             massSlider.maximum = 100000;
-            massSlider.value = 1000;
-            massSlider.onValueChangedObservable.add(function (value) {
-                let formattedValue = massSlider.value.toFixed(1);
+            massSlider.value = 50000;
+            massSlider.onValueChangedObservable.add((value) => {
+                let formattedValue = value.toFixed(1);
                 massTextBlock.text = `Mass: ${formattedValue}`;
             });
             grid.addControl(massSlider, 4, 0);
@@ -174,13 +176,12 @@
             xSlider.minimum = -50;
             xSlider.maximum = 50;
             xSlider.value = 0;
-            xSlider.onValueChangedObservable.add(function (value) {
+            xSlider.onValueChangedObservable.add((value) => {
                 let formattedValue = xSlider.value.toFixed(1);
                 xTextBlock.text = `X: ${formattedValue}`;
                 crosshair.position.x = parseFloat(xSlider.value);
             });
             xStackPanel.addControl(xSlider);
-
             grid.addControl(xStackPanel, 6, 0);
 
             // Create stack panel for the y position setting
@@ -323,21 +324,21 @@
             grid.addControl(button, 13, 0);
 
             button.onPointerClickObservable.add(function (value) {
-                let testPosition = new BABYLON.Vector3(xSlider.value, ySlider.value, zSlider.value); // moon
-                let testVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
-                let testMass = massSlider.value;
-                let testRadius = 1;
+                let objectPosition = new BABYLON.Vector3(xSlider.value, ySlider.value, zSlider.value); // moon
+                let objectVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
+                let newMass = massSlider.value;
+                let newRadius = 1;
 
-                const testMesh = BABYLON.MeshBuilder.CreateSphere("testMesh",
-                    { diameter: testRadius }, scene);
-                testMesh.position = testPosition;
+                const newMesh = BABYLON.MeshBuilder.CreateSphere("newMesh",
+                    { diameter: newRadius }, scene);
+                newMesh.position = objectPosition;
 
-                let tester = new AstroObject(testMass, testRadius, testVelocity, testPosition, testMesh);
-                testBodies2.push(tester);
+                let newAstroObject = new AstroObject(newMass, newRadius, objectVelocity, objectPosition, newMesh);
+                bodiesArray.push(newAstroObject);
             });
 
             // Update sphere position based on keys pressed
-            function updateSpherePosition() {
+            function updateCrosshairPosition() {
                 const speed = 0.4; // Adjust this value for faster/slower movement
 
                 if (moveLeft) {
@@ -354,7 +355,7 @@
 
                 }
                 if (moveUp) {
-                    // Runs when the w/W key is pressed. Moves crosshair up
+                    // Runs when the w/W key is pressed. Moves crosshair up.
                     if (crosshair.position.y < ySlider.maximum) {
                         crosshair.position.y += speed * 1;
                     }
@@ -382,7 +383,6 @@
                 let formattedX = crosshair.position.x.toFixed(1);
                 let formattedY = crosshair.position.y.toFixed(1);
                 let formattedZ = crosshair.position.z.toFixed(1);
-
 
                 xTextBlock.text = `X: ${formattedX}`;
                 xSlider.value = formattedX;
@@ -442,17 +442,19 @@
 
             // These functions run during the program's runtime.
             scene.registerAfterRender(function () {
-                physicsController.UpdateObjectPositions(testBodies2, globalTimeStep, gravitationConstant);
-                updateSpherePosition();
+                physicsController.UpdateObjectPositions(bodiesArray, globalTimeStep, gravitationConstant);
+                updateCrosshairPosition(); // Used to position the crosshair when movement keys are used.
             })
 
             return scene;
         };
+
         const scene = createScene(); //Call the createScene function
         // Register a render loop to repeatedly render the scene
         engine.runRenderLoop(function () {
             scene.render();
         });
+        
         // Watch for browser/canvas resize events
         window.addEventListener("resize", function () {
             engine.resize();
