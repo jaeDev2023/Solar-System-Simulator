@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solar System Simulator: S3</title>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -95,21 +95,21 @@
             grid.addColumnDefinition(1);
 
             // Add Rows for the control
-            for (let i = 0; i < 14; i++) {
+            for (let i = 0; i < 10; i++) {
                 grid.addRowDefinition(1);
             }
-            grid.width = "25%";
+            grid.width = "20%";
             grid.height = "100%";
             grid.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             grid.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-            const gravTextBlock = new BABYLON.GUI.TextBlock();
-            gravTextBlock.text = "Time Speed";
-            gravTextBlock.width = "100%";
-            gravTextBlock.color = "black";
-            gravTextBlock.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER; // Center horizontally
-            gravTextBlock.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; // Center vertically
-            grid.addControl(gravTextBlock, 0, 0);
+            const timeTextBlock = new BABYLON.GUI.TextBlock();
+            timeTextBlock.text = "Time Speed";
+            timeTextBlock.width = "100%";
+            timeTextBlock.color = "black";
+            timeTextBlock.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER; // Center horizontally
+            timeTextBlock.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; // Center vertically
+            grid.addControl(timeTextBlock, 0, 0);
             grid.background = "rgba(255, 255, 255, 0.25)";
 
             let timeStepSlider = new BABYLON.GUI.Slider();
@@ -150,90 +150,6 @@
             });
             grid.addControl(massSlider, 4, 0);
 
-            // Position GUI
-            const positionText = new BABYLON.GUI.TextBlock();
-            positionText.text = "Position";
-            positionText.width = "100%";
-            positionText.color = "black";
-            positionText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center horizontally
-            positionTextverticalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center vertically
-            grid.addControl(positionText, 5, 0);
-
-            // Create stack panel for the x position setting
-            let xStackPanel = new BABYLON.GUI.StackPanel();
-            xStackPanel.isVertical = false;
-
-            // x Text Block
-            let xTextBlock = new BABYLON.GUI.TextBlock();
-            xTextBlock.text = "X: 0";
-            xTextBlock.width = "75px";
-            xStackPanel.addControl(xTextBlock);
-
-            // X position slider
-            let xSlider = new BABYLON.GUI.Slider();
-            xSlider.width = "100px";
-            xSlider.height = "20px";
-            xSlider.minimum = -50;
-            xSlider.maximum = 50;
-            xSlider.value = 0;
-            xSlider.onValueChangedObservable.add((value) => {
-                let formattedValue = xSlider.value.toFixed(1);
-                xTextBlock.text = `X: ${formattedValue}`;
-                crosshair.position.x = parseFloat(xSlider.value);
-            });
-            xStackPanel.addControl(xSlider);
-            grid.addControl(xStackPanel, 6, 0);
-
-            // Create stack panel for the y position setting
-            let yStackPanel = new BABYLON.GUI.StackPanel();
-            yStackPanel.isVertical = false;
-
-            // y Text Block
-            let yTextBlock = new BABYLON.GUI.TextBlock();
-            yTextBlock.text = "Y: 0";
-            yTextBlock.width = "75px";
-            yStackPanel.addControl(yTextBlock);
-
-            // y position slider
-            let ySlider = new BABYLON.GUI.Slider();
-            ySlider.width = "100px";
-            ySlider.height = "20px";
-            ySlider.minimum = -40;
-            ySlider.maximum = 40;
-            ySlider.value = 0;
-            ySlider.onValueChangedObservable.add(function (value) {
-                let formattedValue = ySlider.value.toFixed(1);
-                yTextBlock.text = `Y: ${formattedValue}`;
-                crosshair.position.y = parseFloat(ySlider.value);
-            });
-            yStackPanel.addControl(ySlider);
-            grid.addControl(yStackPanel, 7, 0);
-
-            // Create stack panel for the z position setting
-            let zStackPanel = new BABYLON.GUI.StackPanel();
-            zStackPanel.isVertical = false;
-
-            // z Text Block
-            let zTextBlock = new BABYLON.GUI.TextBlock();
-            zTextBlock.text = "Z: 0";
-            zTextBlock.width = "75px";
-            zStackPanel.addControl(zTextBlock);
-
-            // z position slider
-            let zSlider = new BABYLON.GUI.Slider();
-            zSlider.width = "100px";
-            zSlider.height = "20px";
-            zSlider.minimum = -50;
-            zSlider.maximum = 50;
-            zSlider.value = 0;
-            zSlider.onValueChangedObservable.add(function (value) {
-                let formattedValue = zSlider.value.toFixed(1);
-                zTextBlock.text = `Z: ${formattedValue}`;
-                crosshair.position.z = parseFloat(zSlider.value);
-            });
-            zStackPanel.addControl(zSlider);
-            grid.addControl(zStackPanel, 8, 0);
-
             // Velocity GUI
             const velocityText = new BABYLON.GUI.TextBlock();
             velocityText.text = "Velocity";
@@ -241,7 +157,7 @@
             velocityText.color = "black";
             velocityText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center horizontally
             positionTextverticalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Center vertically
-            grid.addControl(velocityText, 9, 0);
+            grid.addControl(velocityText, 5, 0);
 
             // Create stack panel for the x velocity setting
             let veloXStackPanel = new BABYLON.GUI.StackPanel();
@@ -257,15 +173,15 @@
             let veloXSlider = new BABYLON.GUI.Slider();
             veloXSlider.width = "100px";
             veloXSlider.height = "20px";
-            veloXSlider.minimum = -10;
-            veloXSlider.maximum = 10;
+            veloXSlider.minimum = -5;
+            veloXSlider.maximum = 5;
             veloXSlider.value = 0;
             veloXSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloXSlider.value.toFixed(1);
                 veloXTextBlock.text = `X: ${formattedValue}`;
             });
             veloXStackPanel.addControl(veloXSlider);
-            grid.addControl(veloXStackPanel, 10, 0);
+            grid.addControl(veloXStackPanel, 6, 0);
 
             // Create stack panel for the y velocity setting
             var veloYStackPanel = new BABYLON.GUI.StackPanel();
@@ -281,15 +197,15 @@
             let veloYSlider = new BABYLON.GUI.Slider();
             veloYSlider.width = "100px";
             veloYSlider.height = "20px";
-            veloYSlider.minimum = -10;
-            veloYSlider.maximum = 10;
+            veloYSlider.minimum = -5;
+            veloYSlider.maximum = 5;
             veloYSlider.value = 0;
             veloYSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloYSlider.value.toFixed(1);
                 veloYTextBlock.text = `Y: ${formattedValue}`;
             });
             veloYStackPanel.addControl(veloYSlider);
-            grid.addControl(veloYStackPanel, 11, 0);
+            grid.addControl(veloYStackPanel, 7, 0);
 
             // Create stack panel for the z velocity setting
             let veloZStackPanel = new BABYLON.GUI.StackPanel();
@@ -305,15 +221,15 @@
             let veloZSlider = new BABYLON.GUI.Slider();
             veloZSlider.width = "100px";
             veloZSlider.height = "20px";
-            veloZSlider.minimum = -10;
-            veloZSlider.maximum = 10;
+            veloZSlider.minimum = -5;
+            veloZSlider.maximum = 5;
             veloZSlider.value = 0;
             veloZSlider.onValueChangedObservable.add(function (value) {
                 let formattedValue = veloZSlider.value.toFixed(1);
                 veloZTextBlock.text = `Z: ${formattedValue}`;
             });
             veloZStackPanel.addControl(veloZSlider);
-            grid.addControl(veloZStackPanel, 12, 0);
+            grid.addControl(veloZStackPanel, 8, 0);
 
             let button = BABYLON.GUI.Button.CreateSimpleButton("button", "Generate Object");
             button.width = "100px";
@@ -321,10 +237,10 @@
             button.color = "black";
             button.background = "white";
             button.thickness = 0;
-            grid.addControl(button, 13, 0);
+            grid.addControl(button, 9, 0);
 
             button.onPointerClickObservable.add(function (value) {
-                let objectPosition = new BABYLON.Vector3(xSlider.value, ySlider.value, zSlider.value); // moon
+                let objectPosition = new BABYLON.Vector3(crosshair.position.x, crosshair.position.y, crosshair.position.z);
                 let objectVelocity = new BABYLON.Vector3(veloXSlider.value, veloYSlider.value, veloZSlider.value);
                 let newMass = massSlider.value;
                 let newRadius = 1;
@@ -343,53 +259,41 @@
 
                 if (moveLeft) {
                     // Runs when the a/A key is pressed. Moves crosshair to the left.
-                    if (crosshair.position.x > xSlider.minimum) {
+                    if (crosshair.position.x > -50) {
                         crosshair.position.x -= speed * 1;
                     }
                 }
                 if (moveRight) {
                     // Runs when the d/d key is pressed. Moves crosshair to the right.
-                    if (crosshair.position.x < xSlider.maximum) {
+                    if (crosshair.position.x < 50) {
                         crosshair.position.x += speed * 1;
                     }
 
                 }
                 if (moveUp) {
                     // Runs when the w/W key is pressed. Moves crosshair up.
-                    if (crosshair.position.y < ySlider.maximum) {
+                    if (crosshair.position.y < 40) {
                         crosshair.position.y += speed * 1;
                     }
                 }
                 if (moveDown) {
                     // Runs when the s/S key is pressed. Moves crosshair down.
-                    if (crosshair.position.y > ySlider.minimum) {
+                    if (crosshair.position.y > -40) {
                         crosshair.position.y -= speed * 1;
                     }
                 }
                 if (moveForward) {
                     // Runs when the q/Q key is pressed. Moves crosshair away from the user.
-                    if (crosshair.position.z < zSlider.maximum) {
+                    if (crosshair.position.z < 50) {
                         crosshair.position.z += speed * 1;
                     }
                 }
                 if (moveBackward) {
                     // Runs when the e/E key is pressed. Moves crosshair inward to the user.
-                    if (crosshair.position.z > zSlider.minimum) {
+                    if (crosshair.position.z > -50) {
                         crosshair.position.z -= speed * 1;
                     }
                 }
-
-                // Update the values for the sliders on the GUI
-                let formattedX = crosshair.position.x.toFixed(1);
-                let formattedY = crosshair.position.y.toFixed(1);
-                let formattedZ = crosshair.position.z.toFixed(1);
-
-                xTextBlock.text = `X: ${formattedX}`;
-                xSlider.value = formattedX;
-                yTextBlock.text = `Y: ${formattedY}`;
-                ySlider.value = formattedY;
-                zTextBlock.text = `Z: ${formattedZ}`;
-                zSlider.value = formattedZ;
             }
 
             // Keydown event listener
