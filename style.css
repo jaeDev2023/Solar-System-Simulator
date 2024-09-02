@@ -6,7 +6,38 @@
 }
 
 section {
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 10px;
+}
+
+#content-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#content-buttons button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    margin: 2px;
+}
+
+/* #introduction {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+} */
+
+.resized-image {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
 }
 
 body {
