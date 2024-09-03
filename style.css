@@ -24,9 +24,31 @@ section {
     background-color: transparent;
     color: white;
     border: 2px solid white;
-    margin: 2px;
+    padding: 10px;
+    margin: 2px 5px;
+    border-radius: 25px;
+    transition-duration: 0.7s;
 }
 
+#content-buttons button:hover {
+    background-color: grey;
+}
+
+button.active {
+    background-color: #4ca450;
+    color: white;
+}
+
+#contentContainer {
+    margin-top: 20px;
+}
+
+#sim-link {
+    color: white;
+    border: 2px solid goldenrod;
+    padding: 10px;
+    text-decoration: none;
+}
 /* #introduction {
     display: flex;
     justify-content: center; 
