@@ -5,27 +5,106 @@
     box-sizing: border-box;
 }
 
-section {
+body {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    padding: 10px 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
 }
 
-#content-buttons {
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: radial-gradient(circle, #1C2541, #3A506B);
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    width: 100%;
+}
+
+section {
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+hr {
+    margin: 0.5rem 0;
+}
+
+/* Layout Styles */
+.main-container {
+    padding: 2rem;
+}
+
+#contentContainer {
+    margin-top: 20px;
+}
+
+.header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/*Navigation*/
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Navbar links */
+.navbar a {
+    padding: 14px 20px;
+    display: block;
+    float: left;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+}
+
+/* Change color on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+#sim-link {
+    padding: 10px;
+    border: 2px solid goldenrod;
+    color: white;   
+    text-decoration: none;
+}
+
+/*Button Styles */
+#content-buttons {
+    display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 #content-buttons button {
+    margin: 2px 5px;
+    padding: 10px;
+    border: 2px solid white;
     background-color: transparent;
     color: white;
-    border: 2px solid white;
-    padding: 10px;
-    margin: 2px 5px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     border-radius: 25px;
     transition-duration: 0.7s;
 }
@@ -39,115 +118,18 @@ button.active {
     color: white;
 }
 
-#contentContainer {
-    margin-top: 20px;
-}
-
-#sim-link {
-    color: white;
-    border: 2px solid goldenrod;
-    padding: 10px;
-    text-decoration: none;
-}
-/* #introduction {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: column; 
-} */
-
+/* Utility Classes */
 .resized-image {
+    object-fit: cover;
     width: 230px;
     height: 230px;
-    object-fit: cover;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-}
-
-/* Revealed Section */
-.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Technology Columns Layout */
-.tech-section {
-    margin-top: 20px;
-}
-
-.tech-columns {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.tech-item {
-    flex: 1;
-    padding: 10px;
-    background-color: #000;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    width: 100%;
-    
-    
-    background-color: #000;
-    color: rgb(255, 255, 255);    
-}
-
-/* Styleing for the navbar */
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-}
-
-/* Navbar links */
-.navbar a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-}
-
-/* Change color on hover */
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
+/* Other Styles */
 #renderCanvas {
-    touch-action: none;
     width: 80%;
     height: 80%;
-}
-.header {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-h1
-{
-    text-align: center;
+    touch-action: none;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
+/* Responsive Media Queries */
