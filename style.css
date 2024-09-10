@@ -15,7 +15,7 @@ body {
 html, body {
     margin: 0;
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     background: radial-gradient(circle, #1C2541, #3A506B);
     color: white;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
@@ -61,10 +61,25 @@ hr {
     height: 100%;
 }
 
+#passions-list .list-container {
+    align-self: flex-start;
+}
+
+#passions-list li {
+    list-style-type: square;
+}
+
+ul ul {
+    padding-left: 1.5rem;
+}
+
 /*Navigation*/
 .navbar {
-    overflow: hidden;
-    background-color: #333;
+    display: flex;
+    justify-content: center;
+    background-color: #333; /* original */
+    flex-wrap: wrap;
+
 }
 
 /* Navbar links */
