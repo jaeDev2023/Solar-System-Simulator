@@ -19,12 +19,12 @@ You can:
 ## Controls and How to Play
 Use the control keys to move the red crosshair to where you want to place a new object.
 ### Movement Keys
-W: move crosshair up.
-A: move crosshair to the left.
-D: move crosshair to the right.
-S: move crosshair down.
-Q: move the crosshair away from the screen.
-E: move the crosshair towards the screen.
+* W: move crosshair up.
+* A: move crosshair to the left.
+* D: move crosshair to the right.
+* S: move crosshair down.
+* Q: move the crosshair away from the screen.
+* E: move the crosshair towards the screen.
 
 ### Sliders
 On the left side of the screen are sliders to change values of the object that you want to generate.
@@ -43,6 +43,9 @@ Move the mass slider to the right to increase mass, meaning the object will have
 X slider: Move to the left to add velocity to the left and move it to the right to add velocity in the right direction.
 Y slider: Move to the left to add velocity upwards and move it to the right to add velocity downwards.
 Z slider: Move to the left to add velocity towards the screen and move it to the right to add velocity away from the screen.
+
+#### Generate Object Button
+Use the mouse to click on the Generate Object Button to add a new object to the scene!
 
 ## Image Testing
 ![Test imgage](./images/orbits.png)
