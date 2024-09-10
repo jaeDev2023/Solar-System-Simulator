@@ -40,12 +40,9 @@ Move the mass slider to the left to lower mass, meaning the object will have les
 Move the mass slider to the right to increase mass, meaning the object will have more gravitational pull towards other objects.
 
 #### Velocity Sliders
-X slider: Move to the left to add velocity to the left and move it to the right to add velocity in the right direction.
-Y slider: Move to the left to add velocity upwards and move it to the right to add velocity downwards.
-Z slider: Move to the left to add velocity towards the screen and move it to the right to add velocity away from the screen.
+* X slider: Move to the left to add velocity to the left and move it to the right to add velocity in the right direction.
+* Y slider: Move to the left to add velocity upwards and move it to the right to add velocity downwards.
+* Z slider: Move to the left to add velocity towards the screen and move it to the right to add velocity away from the screen.
 
 #### Generate Object Button
 Use the mouse to click on the Generate Object Button to add a new object to the scene!
-
-## Image Testing
-![Test imgage](./images/orbits.png)
