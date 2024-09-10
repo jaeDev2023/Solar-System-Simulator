@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <h2>The Physics of The Situation: </h2>
                             <p>Objects of mass affect each other. You can determine the "force" that objects pull each other with the equation below:</p>
                             <p>F = (G * m<sub>1</sub> * m<sub>2) / r<sup>2</sup></sub></p>
-                            <p>What do these variables mean?</p>
+                            <h3>What do these variables mean?</h3>
                             <ul>
                                 <li>F: this is the force that is being calculated.</li>
                                 <li>G: The gravitational constant. A very small value. This is always the same value when using this equation.</li>

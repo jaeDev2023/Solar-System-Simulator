@@ -47,6 +47,11 @@ hr {
     margin-top: 20px;
 }
 
+#contentContainer li {
+    padding-left: 1rem;
+    list-style-position: inside;
+}
+
 .header {
     display: flex;
     justify-content: center;
