@@ -148,7 +148,7 @@ button.active {
 
 /* Other Styles */
 #renderCanvas {
-    width: 80%;
-    height: 80%;
+    width: 1200x;
+    height: 800px;
     touch-action: none;
 }
